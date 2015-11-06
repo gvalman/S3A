@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/08/2015, 16:20:40
+    Author     : german
+*/
+
+#conteudo,#cabecalho,#rodape{
+    border: 3px solid black;
+    border-radius:5px;
+}
+
+#conteudo {
+    left:0;
+    right:0;
+    top:10%;
+    bottom:10%;
+    overflow: auto;
+}
+#cabecalho {
+    top:0;
+    left:0;
+    right:0;
+    height: 10%;
+}
+
+#rodape {
+    bottom:0;
+    left:0;
+    right:0;    
+    height: 10%;
+}
+
+#titulo{
+    font-weight: bold;
+    font-size: 300%;
+}

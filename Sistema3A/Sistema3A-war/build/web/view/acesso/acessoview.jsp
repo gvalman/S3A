@@ -19,34 +19,34 @@
         <title>Sistema 3A de Saúde</title>
 
         <!--JQUERY(http://jquery.com/download/)-->
-        <script src="js/jquery-1.11.1.js"></script>
-        <script src="js/jquery-2.1.1.js"></script>
-        <script src="js/jquery-ui.custom.min.js"></script>
+        <script src="resources/js/jquery-1.11.1.js"></script>
+        <script src="resources/js/jquery-2.1.1.js"></script>
+        <script src="resources/js/jquery-ui.custom.min.js"></script>
 
         <!--BOOTSTRAP(http://getbootstrap.com/getting-started/#download)-->
-        <script type="text/javascript" src="js/bootstrap.js"></script>
-        <script type="text/javascript" src="js/npm.js"></script>
-        <script type="text/javascript" src="js/carousel.js"></script>
+        <script type="text/javascript" src="resources/js/bootstrap.js"></script>
+        <script type="text/javascript" src="resources/js/npm.js"></script>
+        <script type="text/javascript" src="resources/js/carousel.js"></script>
 
         <!--https://code.google.com/p/jquery-csv/-->
-        <script type="text/javascript" src="js/jquery.csv-0.71.js"></script>
-        <script type="text/javascript" src="js/myjavascript.js"></script>
+        <script type="text/javascript" src="resources/js/jquery.csv-0.71.js"></script>
+        <script type="text/javascript" src="resources/js/myjavascript.js"></script>
 
         <!-- Maps API Javascript -->
         <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
         <style type="text/css">
-            <%@ include  file="/css/bootstrap.css"%>
-            <%@ include  file="/css/bootstrap-theme.css"%>
-            <%@ include  file="/css/geral.css"%>
-            <%@ include  file="/css/mapaestilo.css"%>
+            <%@ include  file="/resources/css/bootstrap.css"%>
+            <%@ include  file="/resources/css/bootstrap-theme.css"%>
+            <%@ include  file="/resources/css/geral.css"%>
+            <%@ include  file="/resources/css/mapaestilo.css"%>
         </style>
 
         <c:choose>
             <c:when test="${empty unidades}">
                 alert("Não há registro de Unidades.");
-                <script type="text/javascript" src="js/mapa.js"></script>
+                <script type="text/javascript" src="resources/js/mapa.js"></script>
             </c:when>
             <c:otherwise>
                 <script type="text/javascript">
@@ -202,7 +202,7 @@
 
                     function CriarMarker(posicao, titulo, endereco, bairro, fone) {
 
-                        var iconImage = new google.maps.MarkerImage("img/LogoSaudeFamilia.png", null, null, null, new google.maps.Size(60, 60));
+                        var iconImage = new google.maps.MarkerImage("resources/img/LogoSaudeFamilia.png", null, null, null, new google.maps.Size(60, 60));
 
                         var marker = new google.maps.Marker({
                             map: mapa,

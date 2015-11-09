@@ -6,11 +6,14 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Sistema 3A de Saúde</title>
+        <!--<h:outputStylesheet library="css" name="resources/cssJSF/geralJSF.css"/>-->
+        <link type="text/css" rel="stylesheet" href="../resources/cssJSF/geralJSF.css"></link>
+        <!--<h:outputScript library="js" name="jsfcrud.js"/>-->
     </h:head>
     <h:body>
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="Norte">
-                
+            <p:layoutUnit position="north" size="65">
+                <h:outputText styleClass="cabecalho" value="#{mensagem.Cabecalho}"/>
             </p:layoutUnit>
 
             <p:layoutUnit position="south" size="60" header="Sul">

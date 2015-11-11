@@ -7,8 +7,9 @@
     <h:head>
         <title>Sistema 3A de Saúde</title>
         <!--<h:outputStylesheet library="css" name="resources/cssJSF/geralJSF.css"/>-->
-        <link type="text/css" rel="stylesheet" href="../resources/cssJSF/geralJSF.css"></link>
         <!--<h:outputScript library="js" name="jsfcrud.js"/>-->
+        <link type="text/css" rel="stylesheet" href="#{facesContext.externalContext.requestContextPath}/estilo.css/cssJSF/geralJSF.css"></link>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     </h:head>
     <h:body>
         <p:layout fullPage="true">
@@ -23,7 +24,6 @@
             <p:layoutUnit position="center" header="Centro">
                 <ui:insert name="body"/>
             </p:layoutUnit>
-
         </p:layout>
     </h:body>
 </html>

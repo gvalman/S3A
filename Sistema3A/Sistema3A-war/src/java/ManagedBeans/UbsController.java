@@ -17,8 +17,10 @@ import entidade.Ubs;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import sessionbeans.UbsFacade;
 /**
@@ -34,8 +36,12 @@ public class UbsController implements Serializable{
   
     public List<Ubs> getUnidades() {
         if(unidades == null){
-          unidades = ubsFacade.findAll();
+            setUnidades(ubsFacade.findAll());
         }
         return unidades;
+    }
+
+    public void setUnidades(List<Ubs> unidades) {
+        this.unidades = unidades;
     }
 }

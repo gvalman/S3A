@@ -39,10 +39,10 @@ public class AcessoController implements Serializable {
      private UbsFacade ubsFacade;
      */
     private MapModel advancedModel;
-    private Marker marker;
+    private Marker marker;//Será o marcador selecionado
 
-    //Usado para o marcador que será adicionado
-    private double latitude = 0, longitude = 0;
+    //Usado para o marcador que será adicionado como partida do trajeto
+    private double latPartida = 0, lngPartida = 0;
 
     @PostConstruct
     public void init() {
@@ -75,23 +75,23 @@ public class AcessoController implements Serializable {
 
             for (int i = 0; i < results.size(); i++) {
                 GeocodeResult result = results.get(i);
-                setLatitude(result.getLatLng().getLat());
-                setLongitude(result.getLatLng().getLng());
+                setLatPartida(result.getLatLng().getLat());
+                setLngPartida(result.getLatLng().getLng());
                 advancedModel.addOverlay(new Marker(result.getLatLng(), result.getAddress(), null, "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
             }
             //Mostra uma caixa de dialogo
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marcador adicionado", "Lat:" + getLatitude() + ", Lng:" + getLongitude()));
-        }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marcador adicionado", "Lat:" + getLatPartida()+ ", Lng:" + getLngPartida()));
+        }  
     }
 
     public void checkMarkers() {
 
         Marker lastMarker = advancedModel.getMarkers().get(advancedModel.getMarkers().size() - 1);
 
-        if (lastMarker.getLatlng().getLat() == getLatitude() && lastMarker.getLatlng().getLng() == getLongitude()) {
+        if (lastMarker.getLatlng().getLat() == getLatPartida()&& lastMarker.getLatlng().getLng() == getLngPartida()) {
             advancedModel.getMarkers().remove(advancedModel.getMarkers().size() - 1);
-            setLatitude(0);
-            setLongitude(0);
+            setLatPartida(0);
+            setLngPartida(0);
         }
     }
 
@@ -113,33 +113,33 @@ public class AcessoController implements Serializable {
 
     public void setUbsControl(UbsController ubsControl) {
         this.ubsControl = ubsControl;
+    }   
+
+    /**
+     * @return the latPartida
+     */
+    public double getLatPartida() {
+        return latPartida;
     }
 
     /**
-     * @return the latitude
+     * @param latPartida the latPartida to set
      */
-    public double getLatitude() {
-        return latitude;
+    public void setLatPartida(double latPartida) {
+        this.latPartida = latPartida;
     }
 
     /**
-     * @param latitude the latitude to set
+     * @return the lngPartida
      */
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public double getLngPartida() {
+        return lngPartida;
     }
 
     /**
-     * @return the longitude
+     * @param lngPartida the lngPartida to set
      */
-    public double getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * @param longitude the longitude to set
-     */
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLngPartida(double lngPartida) {
+        this.lngPartida = lngPartida;
     }
 }

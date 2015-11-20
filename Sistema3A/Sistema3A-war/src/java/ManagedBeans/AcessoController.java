@@ -10,6 +10,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import java.io.Serializable;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.faces.application.FacesMessage;
@@ -34,10 +35,6 @@ public class AcessoController implements Serializable {
     @ManagedProperty(value = "#{UbsController}")
     private UbsController ubsControl;
 
-    /*
-     @EJB
-     private UbsFacade ubsFacade;
-     */
     private MapModel advancedModel;
     private Marker marker;//Será o marcador selecionado
 
@@ -46,8 +43,6 @@ public class AcessoController implements Serializable {
 
     @PostConstruct
     public void init() {
-
-        //ubsFacade = new UbsFacade();
         advancedModel = new DefaultMapModel();
         LatLng coord;
 
@@ -55,13 +50,6 @@ public class AcessoController implements Serializable {
             coord = new LatLng(unidade.getLatitude(), unidade.getLongitude());
             advancedModel.addOverlay(new Marker(coord, unidade.getUnidade(), unidade));
         }
-
-        /*      
-         for (Ubs unidade : ubsFacade.findAll()) {
-         System.out.println(unidade.getLatitude() + " " + unidade.getLongitude());
-         coord = new LatLng(unidade.getLatitude(), unidade.getLongitude());
-         advancedModel.addOverlay(new Marker(coord, unidade.getUnidade(), unidade));
-         }*/
     }
 
     //Para registrar o marcador definido no Geocode
@@ -70,7 +58,7 @@ public class AcessoController implements Serializable {
         List<GeocodeResult> results = event.getResults();
 
         if (results != null && !results.isEmpty()) {
-            
+
             checkMarkers();
 
             for (int i = 0; i < results.size(); i++) {
@@ -80,15 +68,15 @@ public class AcessoController implements Serializable {
                 advancedModel.addOverlay(new Marker(result.getLatLng(), result.getAddress(), null, "http://maps.google.com/mapfiles/ms/micons/blue-dot.png"));
             }
             //Mostra uma caixa de dialogo
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marcador adicionado", "Lat:" + getLatPartida()+ ", Lng:" + getLngPartida()));
-        }  
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Marcador adicionado", "Lat:" + getLatPartida() + ", Lng:" + getLngPartida()));
+        }
     }
 
     public void checkMarkers() {
 
         Marker lastMarker = advancedModel.getMarkers().get(advancedModel.getMarkers().size() - 1);
 
-        if (lastMarker.getLatlng().getLat() == getLatPartida()&& lastMarker.getLatlng().getLng() == getLngPartida()) {
+        if (lastMarker.getLatlng().getLat() == getLatPartida() && lastMarker.getLatlng().getLng() == getLngPartida()) {
             advancedModel.getMarkers().remove(advancedModel.getMarkers().size() - 1);
             setLatPartida(0);
             setLngPartida(0);
@@ -101,6 +89,9 @@ public class AcessoController implements Serializable {
 
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
+        
+        //FacesContext context = FacesContext.getCurrentInstance();
+        //System.out.println(context.getExternalContext().getRequestMap().toString());
     }
 
     public Marker getMarker() {
@@ -113,7 +104,7 @@ public class AcessoController implements Serializable {
 
     public void setUbsControl(UbsController ubsControl) {
         this.ubsControl = ubsControl;
-    }   
+    }
 
     /**
      * @return the latPartida

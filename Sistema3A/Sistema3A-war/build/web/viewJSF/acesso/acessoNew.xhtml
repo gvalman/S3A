@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/viewJSF/template.xhtml">
+        <ui:define name="body">
+            <script type="text/javascript">
+                function teste() {
+                    alert("TESTE...");
+                    alert('#{AcessoNewController.teste}');
+                }
+            </script>
+            <p:layout>
+                <!--Usado para mostrar caixa de mensagem-->
+                <p:growl id="messages" showDetail="true" />
+
+                <p:layoutUnit position="east"  minSize="400" maxSize="400">
+                    <p:outputPanel id="trajetoTexto" deferred="true">
+                    </p:outputPanel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form prependId="false">
+                        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                            <p:outputLabel for="address" value="Endereço:" />
+                            <p:inputText id="address" />
+                            <p:commandButton value="Geocode" icon="ui-icon-search" onclick="teste()" type="button" />
+                        </h:panelGrid>
+
+                        <p:outputPanel id="mapa" deferred="true">
+                        </p:outputPanel>                        
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

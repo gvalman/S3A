@@ -1,17 +1,21 @@
 package entidade;
 
 import entidade.Assunto;
+import entidade.Avaliacao;
 import entidade.Ubs;
+import entidade.User;
 import java.util.Date;
 import javax.annotation.Generated;
+import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-11-23T20:36:12")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2015-11-30T20:39:52")
 @StaticMetamodel(Comentario.class)
 public class Comentario_ { 
 
     public static volatile SingularAttribute<Comentario, Date> data;
+    public static volatile SingularAttribute<Comentario, User> userIduser;
     public static volatile SingularAttribute<Comentario, Date> hora;
     public static volatile SingularAttribute<Comentario, Assunto> aSSUNTOidassunto;
     public static volatile SingularAttribute<Comentario, Ubs> uBSidUBS;
@@ -21,5 +25,6 @@ public class Comentario_ {
     public static volatile SingularAttribute<Comentario, Integer> nota;
     public static volatile SingularAttribute<Comentario, String> email;
     public static volatile SingularAttribute<Comentario, String> descricao;
+    public static volatile CollectionAttribute<Comentario, Avaliacao> avaliacaoCollection;
 
 }

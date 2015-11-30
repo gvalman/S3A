@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/viewJSF/template.xhtml">
+        <ui:define name="body">
+            <script type="text/javascript">
+
+            </script>
+            <p:layout>
+                <!--Usado para mostrar caixa de mensagem-->
+                <p:growl id="messages" showDetail="true" />
+
+                <p:layoutUnit position="east"  minSize="400" maxSize="400">
+                    <p:outputPanel id="trajetoTexto" deferred="true">
+                    </p:outputPanel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form id="form1">
+                        <p:carousel value="#{carouselView.cars}" headerText="CARROS" var="car" itemStyle="height:200px;width:400px;text-align:center" numVisible="1" easing="easeOutBounce" style="width:400px;" circular="true">
+                            <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
+                                <f:facet name="header">
+                                    <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
+                                </f:facet>
+
+                                <h:outputText value="Id:" />
+                                <h:outputText value="#{car.id}" />
+
+                                <h:outputText value="Year" />
+                                <h:outputText value="#{car.year}" />
+
+                                <h:outputText value="Color:" />
+                                <h:outputText value="#{car.color}" style="color:#{car.color}"/>
+
+                                <h:outputText value="Price" />
+                                <h:outputText value="$#{car.price}" />
+
+                                <f:facet name="footer">
+                                    <p:commandButton update=":form1:carDetail,:form2:lista" oncomplete="PF('carDialog').show()" icon="ui-icon-search">
+                                        <f:setPropertyActionListener value="#{car}" target="#{carouselView.selectedCar}" />
+                                    </p:commandButton>
+                                </f:facet>
+                            </h:panelGrid>
+                        </p:carousel> 
+
+                        <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                            <p:outputPanel id="carDetail" style="text-align:center;">
+                                <p:panelGrid  columns="2" rendered="#{not empty carouselView.selectedCar}" columnClasses="label,value">
+                                    <f:facet name="header">
+                                        <p:graphicImage name="demo/images/car/#{carouselView.selectedCar.brand}-big.gif"/> 
+                                    </f:facet>
+
+                                    <h:outputText value="Id:" />
+                                    <h:outputText value="#{carouselView.selectedCar.id}" />
+
+                                    <h:outputText value="Year" />
+                                    <h:outputText value="#{carouselView.selectedCar.year}" />
+
+                                    <h:outputText value="Color:" />
+                                    <h:outputText value="#{carouselView.selectedCar.color}" style="color:#{carouselView.selectedCar.color}"/>
+
+                                    <h:outputText value="Price" />
+                                    <h:outputText value="$#{carouselView.selectedCar.price}" />
+                                </p:panelGrid>
+                            </p:outputPanel>
+                        </p:dialog>
+                    </h:form>
+
+                    <h:form id="form2"> 
+                        <p:dataScroller id="lista" value="#{carouselView.selectedCar.stores}" var="loja" chunkSize="10">
+                            <f:facet name="header">
+                                LOJAS ONDE ENCONTRARÁ O CARRO SELECIONADO:
+                            </f:facet>
+
+                            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Loja:" />
+                                        <h:outputText value="#{loja}" style="font-weight: bold"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+                            </h:panelGrid>
+                        </p:dataScroller>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

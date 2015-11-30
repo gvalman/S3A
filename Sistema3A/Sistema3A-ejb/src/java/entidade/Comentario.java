@@ -6,8 +6,10 @@
 package entidade;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +20,14 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -76,12 +80,17 @@ public class Comentario implements Serializable {
     @Column(name = "hora")
     @Temporal(TemporalType.TIME)
     private Date hora;
-    @JoinColumn(name = "UBS_idUBS", referencedColumnName = "idUBS")
-    @ManyToOne(optional = false)
-    private Ubs uBSidUBS;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comentario")
+    private Collection<Avaliacao> avaliacaoCollection;
     @JoinColumn(name = "ASSUNTO_idassunto", referencedColumnName = "idassunto")
     @ManyToOne(optional = false)
     private Assunto aSSUNTOidassunto;
+    @JoinColumn(name = "UBS_idUBS", referencedColumnName = "idUBS")
+    @ManyToOne(optional = false)
+    private Ubs uBSidUBS;
+    @JoinColumn(name = "user_iduser", referencedColumnName = "iduser")
+    @ManyToOne(optional = false)
+    private User userIduser;
 
     public Comentario() {
     }
@@ -161,12 +170,13 @@ public class Comentario implements Serializable {
         this.hora = hora;
     }
 
-    public Ubs getUBSidUBS() {
-        return uBSidUBS;
+    @XmlTransient
+    public Collection<Avaliacao> getAvaliacaoCollection() {
+        return avaliacaoCollection;
     }
 
-    public void setUBSidUBS(Ubs uBSidUBS) {
-        this.uBSidUBS = uBSidUBS;
+    public void setAvaliacaoCollection(Collection<Avaliacao> avaliacaoCollection) {
+        this.avaliacaoCollection = avaliacaoCollection;
     }
 
     public Assunto getASSUNTOidassunto() {
@@ -175,6 +185,22 @@ public class Comentario implements Serializable {
 
     public void setASSUNTOidassunto(Assunto aSSUNTOidassunto) {
         this.aSSUNTOidassunto = aSSUNTOidassunto;
+    }
+
+    public Ubs getUBSidUBS() {
+        return uBSidUBS;
+    }
+
+    public void setUBSidUBS(Ubs uBSidUBS) {
+        this.uBSidUBS = uBSidUBS;
+    }
+
+    public User getUserIduser() {
+        return userIduser;
+    }
+
+    public void setUserIduser(User userIduser) {
+        this.userIduser = userIduser;
     }
 
     @Override

@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class EspecialidadesFacade extends AbstractFacade<Especialidades> {
-
     @PersistenceContext(unitName = "Sistema3A-ejbPU")
     private EntityManager em;
 
@@ -28,19 +27,5 @@ public class EspecialidadesFacade extends AbstractFacade<Especialidades> {
     public EspecialidadesFacade() {
         super(Especialidades.class);
     }
-
-    public boolean VerificarNome(String nome) {
-
-        Especialidades esp = null;
-
-        try {
-            esp = (Especialidades)em.createNamedQuery("Especialidades.findByNome")
-                    .setParameter("nome",(String)nome)
-                    .getSingleResult();
-        } catch (Exception e) {
-            //e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
+    
 }

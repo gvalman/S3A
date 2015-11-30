@@ -24,6 +24,5 @@
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/viewJSF/index.xhtml</welcome-file>
-        <!--<welcome-file>faces/viewJSF/acesso/acesso.xhtml</welcome-file>-->
     </welcome-file-list>
 </web-app>

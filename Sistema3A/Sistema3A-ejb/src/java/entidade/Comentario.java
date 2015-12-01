@@ -64,7 +64,6 @@ public class Comentario implements Serializable {
     @Column(name = "descricao")
     private String descricao;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "nota")
     private int nota;
     @Size(max = 200)
@@ -74,9 +73,11 @@ public class Comentario implements Serializable {
     @Size(max = 100)
     @Column(name = "email")
     private String email;
+    @NotNull
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
+    @NotNull
     @Column(name = "hora")
     @Temporal(TemporalType.TIME)
     private Date hora;

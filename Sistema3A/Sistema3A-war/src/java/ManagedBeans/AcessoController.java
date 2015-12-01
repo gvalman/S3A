@@ -31,8 +31,8 @@ import org.primefaces.model.map.Marker;
 @ViewScoped
 public class AcessoController implements Serializable {
 
-    @ManagedProperty(value = "#{UbsController}")
-    private UbsController ubsControl;
+    @ManagedProperty(value = "#{AplicacaoController}")
+    private AplicacaoController aplicacaoControl;
 
     private MapModel advancedModel;
     private Marker marker;//Será o marcador selecionado
@@ -45,7 +45,7 @@ public class AcessoController implements Serializable {
         advancedModel = new DefaultMapModel();
         LatLng coord;
 
-        for (Ubs unidade : this.getUbsControl().getUnidades()) {
+        for (Ubs unidade : this.getAplicacaoControl().getUnidades()) {
             coord = new LatLng(unidade.getLatitude(), unidade.getLongitude());
             advancedModel.addOverlay(new Marker(coord, unidade.getUnidade(), unidade));
         }
@@ -88,21 +88,12 @@ public class AcessoController implements Serializable {
 
     public void onMarkerSelect(OverlaySelectEvent event) {
         marker = (Marker) event.getOverlay();
-        
         //FacesContext context = FacesContext.getCurrentInstance();
         //System.out.println(context.getExternalContext().getRequestMap().toString());
     }
 
     public Marker getMarker() {
         return marker;
-    }
-
-    public UbsController getUbsControl() {
-        return ubsControl;
-    }
-
-    public void setUbsControl(UbsController ubsControl) {
-        this.ubsControl = ubsControl;
     }
 
     /**
@@ -131,5 +122,19 @@ public class AcessoController implements Serializable {
      */
     public void setLngPartida(double lngPartida) {
         this.lngPartida = lngPartida;
+    }
+
+    /**
+     * @return the aplicacaoControl
+     */
+    public AplicacaoController getAplicacaoControl() {
+        return aplicacaoControl;
+    }
+
+    /**
+     * @param aplicacaoControl the aplicacaoControl to set
+     */
+    public void setAplicacaoControl(AplicacaoController aplicacaoControl) {
+        this.aplicacaoControl = aplicacaoControl;
     }
 }

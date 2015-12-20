@@ -18,14 +18,9 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import sessionbeans.UbsFacade;
 
 /**
@@ -55,5 +50,5 @@ public class AplicacaoController implements Serializable {
 
     public void setUnidades(List<Ubs> unidades) {
         this.unidades = unidades;
-    }
+    }  
 }

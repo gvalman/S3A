@@ -25,22 +25,25 @@
                                 <f:validateLength minimum="4" />
                             </h:inputSecret>
                         </h:panelGrid>
-                        <p:commandButton action="#{LoginController.logar()}" value="Log in" ajax="false" />
+                        <p:link outcome="/faces/viewJSF/usuario/formUsuario.xhtml" value="Novo Usuário"></p:link>
+                        <p:commandButton action="#{LoginController.logar()}" value="Log in" ajax="false"/> 
                     </h:form>
                 </h:panelGroup>
             </h:panelGrid>
-            
+
             <h:panelGrid rendered="#{not empty usuario}" columns="2" cellpadding="0" style="width: 100%;background-color: #1E90FF;color: white;font-weight:bold;">
                 <h:panelGroup layout="block" style="text-align: center;">
                     <h:outputText value="#{mensagem.Cabecalho}" style="font-size: 200%;"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" style="text-align: center;">
+                    
                     <h:form>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="#{usuario.getNome()}" />
                         </h:panelGrid>
                         <p:commandButton action="#{LoginController.Deslogar()}" value="Log Out" ajax="false" />
                     </h:form>
+                    
                 </h:panelGroup>
             </h:panelGrid>
         </ui:composition>   

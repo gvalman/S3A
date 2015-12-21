@@ -15,9 +15,17 @@
                 <!--Usado para mostrar caixa de mensagem-->
                 <p:growl id="messages" showDetail="true" />
 
-                <p:layoutUnit position="east"  minSize="400" maxSize="400">
-                    <p:outputPanel id="trajetoTexto" deferred="true">
-                    </p:outputPanel>
+                <p:layoutUnit rendered="#{not empty usuario}" position="east"  minSize="400" maxSize="400">
+                    <h:panelGrid columns="1" cellpadding="0" style="width: 100%;background-color: #1E90FF;color: white;font-weight:bold;">
+                        <h:panelGroup layout="block" style="text-align: center;">
+                            <h:form>
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel value="#{AcolhimentoController.unitySelected.idUBS}" />
+                                </h:panelGrid>
+                                <p:commandButton action="#{LoginController.Deslogar()}" value="Log Out" ajax="false" />
+                            </h:form>
+                        </h:panelGroup>
+                    </h:panelGrid>
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
@@ -30,13 +38,13 @@
 
                                 <h:outputText value="Color:" />
                                 <h:outputText value="#{unidade.unidade}" style="color:blue;"/>
-                                
+
                                 <h:outputText value="Endereço:" />
                                 <h:outputText value="#{unidade.endereco}" />
-                                
+
                                 <h:outputText value="Bairro:" />
                                 <h:outputText value="#{unidade.bairro}" />
-                                
+
                                 <h:outputText value="Telefone:" />
                                 <h:outputText value="#{unidade.fone}" />
 

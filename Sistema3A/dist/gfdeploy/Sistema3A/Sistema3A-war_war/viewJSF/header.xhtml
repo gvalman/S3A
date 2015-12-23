@@ -36,14 +36,12 @@
                     <h:outputText value="#{mensagem.Cabecalho}" style="font-size: 200%;"/>
                 </h:panelGroup>
                 <h:panelGroup layout="block" style="text-align: center;">
-                    
                     <h:form>
                         <h:panelGrid columns="2">
                             <h:outputLabel value="#{usuario.getNome()}" />
                         </h:panelGrid>
                         <p:commandButton action="#{LoginController.Deslogar()}" value="Log Out" ajax="false" />
                     </h:form>
-                    
                 </h:panelGroup>
             </h:panelGrid>
         </ui:composition>   

@@ -20,7 +20,31 @@
                         <h:panelGroup layout="block" style="text-align: center;">
                             <h:form>
                                 <h:panelGrid columns="2">
-                                    <h:outputLabel value="#{AcolhimentoController.unitySelected.idUBS}" />
+                                    <p:outputLabel for="Unidade" value="UNIDADE: " />
+                                    <p:selectOneMenu id="Unidade" value="#{ComentarioController.idUnidade}" effect="fold">
+                                        <f:selectItems value="#{AplicacaoController.unidades}"
+                                                       var="unidade"
+                                                       itemLabel="#{unidade.unidade}" 
+                                                       itemValue="#{unidade.idUBS}" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel for="#{mensagem.Titulo}" value="TITULO: " />
+                                    <p:inputText  id="#{mensagem.Titulo}" 
+                                                  value="#{ComentarioController.titulo}" 
+                                                  label="#{mensagem.Titulo}" 
+                                                  required="true">
+                                        <f:validateLength minimum="6" />
+                                    </p:inputText>
+                                    <p:watermark for="#{mensagem.Titulo}" value="Defina um titulo para o comentário" />
+
+
+                                    <h:outputLabel for="#{mensagem.Descricao}" value="DESRIÇÃO: " />
+                                    <p:inputTextarea id="#{mensagem.Descricao}"
+                                                     value="#{ComentarioController.descricao}"
+                                                     label="#{mensagem.Descricao}"
+                                                     required="true"/>
+                                    <p:watermark for="#{mensagem.Descricao}" value="Descreva seu comentário" />
+
                                 </h:panelGrid>
                                 <p:commandButton action="#{LoginController.Deslogar()}" value="Log Out" ajax="false" />
                             </h:form>

@@ -12,7 +12,23 @@ import javax.faces.bean.RequestScoped;
 import sessionbeans.UserFacade;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import org.primefaces.context.RequestContext;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 @ManagedBean(name = "formUserController")
 @RequestScoped
@@ -21,12 +37,13 @@ public class formUserController {
     @EJB
     private UserFacade userFacade;
 
+    //private static final String URL_WEBSERVICE= "https://viacep.com.br/ws/";
+    private static final String URL_WEBSERVICE = "http://cep.correiocontrol.com.br/";
     private User userInsert;
     private String login, senha, nome, email;
     private int cep;
 
     public void cadastrar() {
-        System.out.println(cep);
         String saida = null;
         userInsert = new User();
         userInsert.setLogin(login);
@@ -37,13 +54,14 @@ public class formUserController {
         try {
             userFacade.create(userInsert);
             saida = "Cadastro realizado com sucesso!";
+            limparForm();
         } catch (Exception e) {
             saida = "Cadastro não pode ser realizado.Tente Novamente!";
         }
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", saida));
     }
-    
+
     /**
      * @return the userInsert
      */
@@ -120,4 +138,50 @@ public class formUserController {
     public void setCep(int cep) {
         this.cep = cep;
     }
+
+    public void limparForm() {
+        this.login = null;
+        this.nome = null;
+        this.senha = null;
+        this.cep = 0;
+        this.email = null;
+    }
+
+    public void checkCEP() {
+
+        URL stockURL = null;
+        BufferedReader in = null;
+
+        HttpURLConnection connection = null;
+        String saida = "";
+
+        try {
+            System.out.println(URL_WEBSERVICE + cep + ".json");
+            stockURL = new URL(URL_WEBSERVICE + cep + ".json");
+            in = new BufferedReader(new InputStreamReader(stockURL.openStream()));
+            in.close();
+
+            connection = (HttpURLConnection) stockURL.openConnection();
+            InputStream content = connection.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            while ((line = reader.readLine()) != null) {
+                //sb.append(line + "\n");
+                for (String item : line.split(",")) {
+                    item = item.replace("{", "");
+                    item = item.replace("}", "");
+                    saida += item + "\n";
+                }
+            }
+        } catch (MalformedURLException ex) {
+            Logger.getLogger(formUserController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(formUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", saida));
+    }
+
 }

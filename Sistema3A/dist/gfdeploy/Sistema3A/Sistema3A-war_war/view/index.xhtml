@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/view/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{mensagem.Cabecalho}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGrid id="TabelaAAA" columns="3" cellpadding="0">
+                <h:panelGroup id="AcessoBackground" layout="block" style="background-color: yellow;">
+                    <!--<h:outputText id="Acesso11" value="A"/>-->
+                    <h:link value="A" outcome="acesso/acesso" />
+                    <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                    <h:outputText id="Acesso" value="ACESSO"/>
+                    <h:outputText value="&lt;br/&gt;" escape="false" />
+                </h:panelGroup>
+                <h:panelGroup id="AcolhimentoBackground" layout="block" style="background-color: blue;">
+                    <h:link value="A" outcome="acolhimento/acolhimento" />
+                    <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                    <h:outputText id="Acolhimento" value="ACOLHIMENTO"/>
+                    <h:outputText value="&lt;br/&gt;" escape="false" />
+                </h:panelGroup>
+                <h:panelGroup id="AcaoBackground" layout="block" style="background-color: #91c20a;">
+                    <h:link value="A" outcome="index" />
+                    <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                    <h:outputText id="Acao" value="AÇÃO"/>
+                    <h:outputText value="&lt;br/&gt;" escape="false" />
+                </h:panelGroup>
+                <f:facet name="footer">
+                    <h:panelGroup id="Acesso2" layout="block" style="background-color: black;">
+                        <h:outputText value="MAPEAMENTO DAS UNIDADES MÉDICAS"/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                        <h:outputText value="- Poderá verificar a localização de todas as unidades da cidade do Recife."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- Poderá visualizar o trajeto até a unidade."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- Poderá visualizar informações prévias sobre a unidade."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                    </h:panelGroup>
+                    <h:panelGroup id="Acolhimento2" layout="block" style="background-color: black;">
+                        <h:outputText  value="SERVIÇOS DAS UNIDADES MÉDICAS"/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                        <h:outputText value="- Poderá verificar assuntos como Segurança, Atendimento,dentre outros."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- Cada usuário poderá fazer sua própria avaliação e comentários sobre cada unidade."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- Cada usuário poderá apresentar um novo assunto a ser tratado por uma determinada unidade."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- Cada Novo Assunto/Comentário será avaliado pelos próprios usuários determinando assim se o mesmo é válido ou não."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                    </h:panelGroup>
+                    <h:panelGroup id="Acao2" layout="block" style="background-color: black;">
+                        <h:outputText value="LEVATAMENTO ESTATÍSTICO DAS UNIDADES MÉDICAS"/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                        <h:outputText value="- Neste módulo o usuário poderá ter uma visão geral de todas as unidades."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- Quais unidades receberam melhores avaliações a partir dos assuntos abordados."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                        <h:outputText value="- OBS.: Toda e qualquer informação apresentada neste site foram fornecidas pelos próprios usuários.
+                                      Logo as informações colhidas não são autenticadas do ponto de vista do governo/estado de Pernambuco."/>
+                        <h:outputText value="&lt;br/&gt;" escape="false" />
+                    </h:panelGroup>
+                </f:facet>
+            </h:panelGrid>
+            <ui:include src="footer.xhtml" />
+        </ui:define>
+    </ui:composition>
+</html>
+

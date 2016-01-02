@@ -1,40 +1,72 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 11/08/2015, 16:20:40
-    Author     : german
-*/
+/*CSS do header.xhtml*/
+div#cabecalho,div#cabecalho>div{
+    background-color: #1E90FF;
+    color: white;
+    font-weight:bold;
+    width: 100%;
 
-#conteudo,#cabecalho,#rodape{
-    border: 3px solid black;
-    border-radius:5px;
+    -moz-border-radius:7px;
+    -webkit-border-radius:7px;
+    border-radius:7px;
 }
 
-#conteudo {
-    left:0;
-    right:0;
-    top:10%;
-    bottom:10%;
-    overflow: auto;
-}
-#cabecalho {
-    top:0;
-    left:0;
-    right:0;
-    height: 10%;
+table#HeaderOff tr>td:first-child>div,table#HeaderOn tr>td:first-child>div{
+    font-size: 200%;
 }
 
-#rodape {
-    bottom:0;
-    left:0;
-    right:0;    
-    height: 10%;
+div#cabecalho>div>table{
+    width: 100%;
+    height: 100%;
+}
+/*******************/
+
+/*CSS do index.xhtml*/
+div#conteudo{
+    width: 100%;
+    height: 100%;
 }
 
-#titulo{
-    font-weight: bold;
+div#conteudo>div:first-child{
+    background: url(img/Background.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+
+table#TabelaAAA,table#TabelaAAA div{
+    width: 100%;
+    height: 100%;
+}
+
+table#TabelaAAA td{
+    width: 33%;
+}
+
+table#TabelaAAA td div{
+    text-align: center;
+    opacity: 0.8;
+}
+
+#TabelaAAA td *,
+#TabelaAAA tfoot span,
+#HeaderOff a,#HeaderOn a{
+    font-weight:bold;
+    color: white;
+}
+
+#TabelaAAA a{
+    font-size: 1500%;
+}
+
+#AcessoBackground span:nth-child(3),
+#AcolhimentoBackground span:nth-child(3),
+#AcaoBackground span:nth-child(3){
     font-size: 300%;
+}
+
+#TabelaAAA div a,#HeaderOff a,#HeaderOn a{
+    text-decoration:none;
 }

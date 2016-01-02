@@ -5,9 +5,11 @@
  */
 package ManagedBeans;
 
+import entidade.Assunto;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import sessionbeans.AssuntoFacade;
 
 /**
@@ -15,13 +17,21 @@ import sessionbeans.AssuntoFacade;
  * @author german
  */
 @ManagedBean(name = "AssuntoController")
-@RequestScoped
+@ViewScoped
 public class AssuntoController {
+
     @EJB
-    private AssuntoFacade assuntoFacade;///<<<----CONTINUAR COM O CADASTRO DO COMENTÁRIO
-    
+    private AssuntoFacade assuntoFacade;
+    private List<Assunto> Assuntos = null;
+
+    private  int idAssunto;
     private String titulo;
     private String descricao;
+
+    public List<Assunto> ObterAssuntos() {
+        Assuntos = assuntoFacade.findAll();
+        return Assuntos;
+    }
 
     /**
      * @return the titulo
@@ -50,5 +60,19 @@ public class AssuntoController {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
+    /**
+     * @return the idAssunto
+     */
+    public int getIdAssunto() {
+        return idAssunto;
+    }
+
+    /**
+     * @param idAssunto the idAssunto to set
+     */
+    public void setIdAssunto(int idAssunto) {
+        this.idAssunto = idAssunto;
+    }
+
 }

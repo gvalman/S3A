@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>  
+        <ui:composition>
+            <p:growl id="messagemHeader" showDetail="true" />
+            <h:panelGrid id="HeaderOff" rendered="#{empty usuario}" columns="2" cellpadding="0">
+                <h:panelGroup layout="block" style="text-align: center;">
+                    <!--<h:outputText value="#{mensagem.Cabecalho}"/>-->
+                    <p:link outcome="/view/index" value="#{mensagem.Cabecalho}"></p:link>
+                </h:panelGroup>
+                <h:panelGroup layout="block" style="text-align: center;">
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="#{mensagem.Login}" />
+                            <h:inputText value="#{LoginController.login}" label="Email" id="email" required="true">
+                                <f:validateLength minimum="6" />
+                            </h:inputText>
+
+                            <h:outputLabel value="#{mensagem.Senha}" />
+                            <h:inputSecret value="#{LoginController.senha}" label="Password" id="senha" required="true" autocomplete="off" >
+                                <f:validateLength minimum="4" />
+                            </h:inputSecret>
+                            <p:commandButton action="#{LoginController.logar()}" value="Log in" ajax="false"/> 
+                            <h:link value="Novo Usuário" outcome="/view/usuario/formUsuario"/>
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGrid>
+
+            <h:panelGrid id="HeaderOn" rendered="#{not empty usuario}" columns="2" cellpadding="0">
+                <h:panelGroup layout="block" style="text-align: center;">
+                    <!--<h:outputText value="#{mensagem.Cabecalho}" style="font-size: 200%;"/>-->
+                    <p:link outcome="/view/index" value="#{mensagem.Cabecalho}"></p:link>
+                </h:panelGroup>
+                <h:panelGroup layout="block" style="text-align: center;">
+                    <h:form>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel value="#{usuario.getNome()}" />
+                        </h:panelGrid>
+                        <p:commandButton action="#{LoginController.Deslogar()}" value="Log Out" ajax="false" />
+                    </h:form>
+                </h:panelGroup>
+            </h:panelGrid>
+        </ui:composition>   
+    </h:body>
+</html>
+

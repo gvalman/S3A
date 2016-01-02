@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Sistema 3A de Saúde</title>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+        <script type="text/javascript"	src="${pageContext.request.contextPath}/resources/jsAux/jquery-2.1.1.js" />
+    </h:head>
+    <h:body>
+        <p:layout fullPage="true">
+            <p:layoutUnit id="cabecalho" position="north" size="120">
+                <ui:insert name="header">
+                    <ui:include src="header.xhtml" />
+                </ui:insert>
+            </p:layoutUnit>
+            
+            <p:layoutUnit id="conteudo" position="center">
+                <ui:insert name="body"/>
+            </p:layoutUnit>
+        </p:layout>
+
+        <h:outputStylesheet library="css" name="geral.css"/>
+        <h:outputScript library="js" name="geral.js"/>
+    </h:body>
+</html>
+
+
+

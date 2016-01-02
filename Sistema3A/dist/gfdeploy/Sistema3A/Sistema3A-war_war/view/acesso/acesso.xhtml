@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/view/template.xhtml">
+        <ui:define name="body">
+            <script type="text/javascript">
+                //var directionDisplay;
+                //var directionsService = new google.maps.DirectionsService();
+
+                function geocode() {
+                    PF('geoMap').geocode(document.getElementById('address').value);
+                }
+
+                function DefinirTrajeto(latStart, lngStart) {
+                    /*
+                     var latEnd= #{AcessoController.marker.latlng.lat};
+                     var lngEnd= #{AcessoController.marker.latlng.lng};
+                     */
+                    if (latStart != 0 || lngStart != 0) {
+                        alert("LatStart:" + latStart + " LngStart:" + lngStart);
+                        /*alert("LatEnd" + latEnd + " LngEnd:" + lngEnd);
+                         
+                         var latlngStart = new google.maps.LatLng(latStart, lngStart);
+                         var latlngEnd = new google.maps.LatLng(latEnd, lngEnd);
+                         
+                         var request = {
+                         origin: latlngStart,
+                         destination: latlngEnd,
+                         travelMode: google.maps.TravelMode.DRIVING
+                         };
+                         
+                         directionDisplay.setMap(geoMap.getMap());
+                         directionsDisplay.setPanel(document.getElementById("trajetoTexto"));
+                         
+                         directionsService.route(request, function (result, status) {
+                         if (status == google.maps.DirectionsStatus.OK) {
+                         directionsDisplay.setDirections(result);
+                         }else{
+                         alert("Erro na geração do mapa");
+                         }
+                         });*/
+                    } else {
+                        alert("NÃO OK!!!!");
+                    }
+                }
+            </script>
+            <p:layout>
+                <!--Usado para mostrar caixa de mensagem-->
+                <p:growl id="messages" showDetail="true" />
+
+                <p:layoutUnit position="east"  minSize="400" maxSize="400">
+                    <p:outputPanel id="trajetoTexto" deferred="true">
+                    </p:outputPanel>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h:form prependId="false">
+                        <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                            <p:outputLabel for="address" value="Endereço:" />
+                            <p:inputText id="address" />
+                            <p:commandButton value="Geocode" icon="ui-icon-search" onclick="geocode()" type="button" />
+                        </h:panelGrid>
+
+                        <p:gmap 
+                            id="geoGmap" 
+                            widgetVar="geoMap"
+                            fitBounds="true"
+                            center="#{mensagem.Latitude},#{mensagem.Longitude}" 
+                            streetView="true" 
+                            zoom="11" 
+                            type="#{mensagem.Tipomapa}" 
+                            style="width:100%;height:500px" 
+                            model="#{AcessoController.advancedModel}">
+
+                            <!--oncomplete,process,onstart,onsuccess,onerror and update-->
+                            <p:ajax event="overlaySelect" listener="#{AcessoController.onMarkerSelect}" oncomplete="javascript:DefinirTrajeto(#{AcessoController.latPartida},#{AcessoController.lngPartida})"/>
+                            <p:ajax event="geocode" listener="#{AcessoController.onGeocode}" update="@this,messages"/>
+
+                            <p:gmapInfoWindow id="infoWindow">
+                                <!--<p:outputPanel> será transformado em <div>-->
+                                <p:outputPanel style="text-align: left; display: block; margin: auto">
+                                    <h:outputText value="#{AcessoController.marker.title}" />
+                                    <br />
+                                    <h:outputText value="Endereço: #{AcessoController.marker.data.endereco}" />
+                                    <br />
+                                    <h:outputText value="Bairro: #{AcessoController.marker.data.bairro}" />
+                                    <br />
+                                    <h:outputText value="Fone: #{AcessoController.marker.data.fone}" />
+                                    <br />
+                                </p:outputPanel>
+                            </p:gmapInfoWindow>
+                        </p:gmap>
+                        <p:dock position="bottom">
+                            <p:menuitem value="Acolhimento" icon="/resources/img/Acolhimento.png" url="../acolhimento/acolhimento.xhtml"/>
+                            <p:menuitem value="Home" icon="/resources/img/Home.png" url="../index.xhtml"/>
+                            <p:menuitem value="Ação" icon="/resources/img/Acao.png" url="../index.xhtml"/>
+                        </p:dock>
+                    </h:form>
+                </p:layoutUnit>
+            </p:layout>
+        </ui:define>
+    </ui:composition>
+</html>
+

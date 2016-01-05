@@ -5,21 +5,114 @@
  */
 package ManagedBeans;
 
+import entidade.Avaliacao;
+import entidade.AvaliacaoPK;
+import entidade.Comentario;
+import entidade.User;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import sessionbeans.AssuntoFacade;
+import sessionbeans.AvaliacaoFacade;
+import sessionbeans.ComentarioFacade;
+import sessionbeans.UbsFacade;
+import sessionbeans.UserFacade;
 
 /**
  *
  * @author german
  */
 @ManagedBean(name = "ComentarioController")
-@RequestScoped
+@ViewScoped
 public class ComentarioController {
+
+    //@ManagedProperty(value = "#{AplicacaoController}")
+    //private AplicacaoController aplControl;
+    @EJB
+    private ComentarioFacade comentarioFacade;
+
+    @EJB
+    private UbsFacade ubsFacade;
+    @EJB
+    private AssuntoFacade assuntoFacade;
+    @EJB
+    private UserFacade userFacade;
+    @EJB
+    private AvaliacaoFacade avaliacaoFacade;
+
+    private Comentario comentario;
+
     private String titulo;
     private String descricao;
-    private int idUnidade;
-    private int idUsuario;
-    private int idAssunto;
+    private int IdUnidade;
+    private int Idassunto;
+    private User UsuarioLogado;
+
+    public void CadastrarComentario() {
+
+        String saida = null;
+        comentario = new Comentario();
+        comentario.setTitulo(titulo);
+        comentario.setDescricao(descricao);
+
+        comentario.setUBSidUBS(ubsFacade.find(IdUnidade));
+        //comentario.setUBSidUBS(aplicacaoControl.ObterUnidade(IdUnidade));
+        comentario.setASSUNTOidassunto(assuntoFacade.find(Idassunto));
+        //comentario.setASSUNTOidassunto(aplicacaoControl.ObterAssunto(Idassunto));
+
+        UsuarioLogado = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
+        comentario.setUserIduser(UsuarioLogado);
+        Date data = new Date();
+        comentario.setData(data);
+        comentario.setHora(data);
+        try {
+            comentarioFacade.create(comentario);
+            GerarAvaliacaoAceitacao();
+            saida = "Cadastro realizado com sucesso!";
+        } catch (Exception e) {
+            saida = "Cadastro não pode ser realizado.Tente Novamente!";
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", saida));
+    }
+
+    private void GerarAvaliacaoAceitacao() {
+
+        ArrayList<Integer> Escolhidos = new ArrayList<Integer>();
+        List<User> Users = userFacade.findAll();
+        int escolhido;
+        boolean Adicionar = true;
+        Random gerador = new Random();
+        Avaliacao avaliacao = new Avaliacao();
+        AvaliacaoPK pk = new AvaliacaoPK();
+
+        while (Escolhidos.size() < 3) {
+            escolhido = gerador.nextInt(Users.size());
+            for (int i : Escolhidos) {
+                if (i == escolhido || Users.get(i).getIduser() == UsuarioLogado.getIduser()) {
+                    Adicionar = false;
+                    break;
+                }
+            }
+            if (Adicionar) {
+                pk.setUserIduser(Users.get(escolhido).getIduser());
+                pk.setComentarioIdcomentario(comentarioFacade.findAll().get(comentarioFacade.findAll().size() - 1).getIdcomentario());
+                avaliacao.setAvaliacaoPK(pk);
+
+                avaliacao.setAceitacao(true);
+                avaliacaoFacade.create(avaliacao);
+
+                Escolhidos.add(escolhido);
+            }
+            Adicionar = true;
+        }
+    }
 
     /**
      * @return the titulo
@@ -50,46 +143,30 @@ public class ComentarioController {
     }
 
     /**
-     * @return the idUnidade
+     * @return the IdUnidade
      */
     public int getIdUnidade() {
-        return idUnidade;
+        return IdUnidade;
     }
 
     /**
-     * @param idUnidade the idUnidade to set
+     * @param IdUnidade the IdUnidade to set
      */
-    public void setIdUnidade(int idUnidade) {
-        this.idUnidade = idUnidade;
+    public void setIdUnidade(int IdUnidade) {
+        this.IdUnidade = IdUnidade;
     }
 
     /**
-     * @return the idUsuario
+     * @return the Idassunto
      */
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getIdassunto() {
+        return Idassunto;
     }
 
     /**
-     * @param idUsuario the idUsuario to set
+     * @param Idassunto the Idassunto to set
      */
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdassunto(int Idassunto) {
+        this.Idassunto = Idassunto;
     }
-
-    /**
-     * @return the idAssunto
-     */
-    public int getIdAssunto() {
-        return idAssunto;
-    }
-
-    /**
-     * @param idAssunto the idAssunto to set
-     */
-    public void setIdAssunto(int idAssunto) {
-        this.idAssunto = idAssunto;
-    }
-    
-    
 }

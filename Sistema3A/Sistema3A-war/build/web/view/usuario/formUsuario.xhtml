@@ -19,7 +19,7 @@
                             <!--Campo LOGIN-->
                             <h:outputLabel for="#{mensagem.Login}" value="LOGIN: " />
                             <p:inputText  id="#{mensagem.Login}" 
-                                          value="#{formUserController.login}" 
+                                          value="#{UserController.login}" 
                                           label="#{mensagem.Login}" 
                                           required="true">
                                 <f:validateLength minimum="6" />
@@ -31,7 +31,7 @@
                             <!--Campo NOME-->
                             <h:outputLabel for="#{mensagem.Nome}" value="NOME: " />
                             <p:inputText  id="#{mensagem.Nome}" 
-                                          value="#{formUserController.nome}" 
+                                          value="#{UserController.nome}" 
                                           label="#{mensagem.Nome}" 
                                           required="true">
                                 <f:validateLength minimum="6" />
@@ -43,7 +43,7 @@
                             <!--Campo SENHA-->
                             <h:outputLabel for="#{mensagem.Senha}" value="SENHA: " />
                             <p:password id="#{mensagem.Senha}" 
-                                        value="#{formUserController.senha}" 
+                                        value="#{UserController.senha}" 
                                         label="#{mensagem.Senha}" 
                                         required="true" 
                                         autocomplete="off">
@@ -58,15 +58,16 @@
                             <p:inputText id="#{mensagem.Cep}" 
                                          required="true" 
                                          label="#{mensagem.Cep}" 
-                                         value="#{formUserController.cep}">
+                                         value="#{UserController.cep}">
                                 <f:validateLength minimum="8" maximum="8"/> 
-                                <p:ajax event="keyup" update="messagemFormUser" listener="#{formUserController.checkCEP}" />
+                                <p:ajax event="keyup" update="messagemFormUser" listener="#{UserController.checkCEP}" />
+
                             </p:inputText>
                             <p:watermark for="#{mensagem.Cep}" value="Digite um CEP" />
 
                             <!--
                             <p:outputLabel for="cep" value="#{mensagem.Cep}" />
-                            <p:inputMask id="cep" value="#{formUserController.cep}" mask="99.999-999" required="true"/>
+                            <p:inputMask id="cep" value="#{UserController.cep}" mask="99.999-999" required="true"/>
                             -->
                             <h:outputText value="&lt;br/&gt;" escape="false" /> 
 
@@ -75,7 +76,7 @@
                             <p:inputText id="#{mensagem.Email}" required="true" label="#{mensagem.Email}" size="40"
                                          requiredMessage="Digite um email."
                                          validatorMessage="Formato de Email Inválido."
-                                         value="#{formUserController.email}">
+                                         value="#{UserController.email}">
 
                                 <f:validateRegex
                                     pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
@@ -84,7 +85,7 @@
                             <p:watermark for="#{mensagem.Email}" value="Digite um Email" />
                             <p:message for="#{mensagem.Email}" />
 
-                            <p:commandButton action="#{formUserController.cadastrar()}" value="CADASTRAR" ajax="false" />
+                            <p:commandButton action="#{UserController.cadastrar()}" value="CADASTRAR" ajax="false" />
                             <!--<p:link outcome="/faces/view/index.xhtml" value="RETORNAR"></p:link>-->
                         </h:panelGroup>
                     </h:panelGrid>

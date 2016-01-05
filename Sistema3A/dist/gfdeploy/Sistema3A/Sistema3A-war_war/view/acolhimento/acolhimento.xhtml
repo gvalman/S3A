@@ -11,13 +11,85 @@
             <script type="text/javascript">
 
             </script>
+
+            <!--Formulário para cadastrar ASSUNTO-->
+            <h:form>
+                <p:dialog header="ASSUNTO" widgetVar="dlgAssunto" height="180" >
+                    <h:panelGrid columns="1" cellpadding="0" style="width: 100%;font-weight:bold;">
+                        <h:panelGroup layout="block" style="text-align: center;">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="#{mensagem.Titulo}" value="TITULO: " />
+                                <p:inputText  id="#{mensagem.Titulo}" 
+                                              value="#{AssuntoController.titulo}" 
+                                              label="#{mensagem.Titulo}" 
+                                              required="true">
+                                    <f:validateLength minimum="6" />
+                                </p:inputText>
+
+                                <h:outputLabel for="#{mensagem.Descricao}" value="DESCRIÇÃO: " />
+                                <p:inputTextarea id="#{mensagem.Descricao}"
+                                                 value="#{AssuntoController.descricao}"
+                                                 label="#{mensagem.Descricao}"
+                                                 required="true"/>
+
+                            </h:panelGrid>
+                            <p:commandButton action="#{AssuntoController.CadastrarAssunto()}" value="CADASTRAR" ajax="false" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+
+            <!--Formulário para cadastrar COMENTÁRIO-->
+            <h:form>
+                <p:dialog header="COMENTÁRIO" widgetVar="dlgComentario" height="250" >
+                    <h:panelGrid columns="1" cellpadding="0" style="width: 100%;font-weight:bold;">
+                        <h:panelGroup layout="block" style="text-align: center;">
+                            <h:panelGrid columns="2">
+                                <p:outputLabel for="Unidade" value="UNIDADE: " />
+                                <p:selectOneMenu id="Unidade" value="#{ComentarioController.idUnidade}" effect="fold">
+                                    <f:selectItems value="#{AplicacaoController.unidades}"
+                                                   var="unidade"
+                                                   itemLabel="#{unidade.unidade}" 
+                                                   itemValue="#{unidade.idUBS}" />
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="Assunto" value="ASSUNTO: " />
+                                <p:selectOneMenu id="Assunto" value="#{ComentarioController.idassunto}" effect="fold">
+                                    <f:selectItems value="#{AssuntoController.ObterAssuntos()}"
+                                                   var="assunto"
+                                                   itemLabel="#{assunto.titulo}"
+                                                   itemDescription="#{assunto.descricao}"
+                                                   itemValue="#{assunto.idassunto}" />
+                                </p:selectOneMenu>
+
+                                <h:outputLabel for="#{mensagem.Titulo}" value="TITULO: " />
+                                <p:inputText  id="#{mensagem.Titulo}" 
+                                              value="#{ComentarioController.titulo}" 
+                                              label="#{mensagem.Titulo}" 
+                                              required="true">
+                                    <f:validateLength minimum="6" />
+                                </p:inputText>
+
+                                <h:outputLabel for="#{mensagem.Descricao}" value="DESRIÇÃO: " />
+                                <p:inputTextarea id="#{mensagem.Descricao}"
+                                                 value="#{ComentarioController.descricao}"
+                                                 label="#{mensagem.Descricao}"
+                                                 required="true"/>
+                            </h:panelGrid>
+                            <p:commandButton action="#{ComentarioController.CadastrarComentario()}" value="CADASTRAR" ajax="false" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
+
             <p:layout>
                 <!--Usado para mostrar caixa de mensagem-->
                 <p:growl id="messages" showDetail="true" />
 
-                <p:layoutUnit position="center" minSize="500">
+                <p:layoutUnit position="west" size="420">
+                    <!--Formulário para mostrar o carroussel de UNIDADE-->
                     <h:form id="form1">
-                        <p:carousel value="#{AplicacaoController.unidades}" headerText="UNIDADES" var="unidade" itemStyle="height:200px;width:400px;text-align:center" numVisible="1" easing="easeOutBounce" style="width:400px;" circular="true">
+                        <p:carousel  value="#{AplicacaoController.unidades}" headerText="UNIDADES" var="unidade" itemStyle="height:200px;width:400px;text-align:center" numVisible="1" easing="easeOutBounce" style="width:400px;" circular="true">
                             <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
                                 <f:facet name="header">
                                     <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
@@ -49,50 +121,18 @@
                         </p:dock>
                     </h:form>
 
-                    <h:form id="formModal" rendered="#{not empty usuario}">
-                        <p:commandButton value="COMENTÁRIO" type="button" onclick="PF('dlg2').show();"  icon="ui-icon-extlink"/>
-                        <p:dialog header="COMENTÁRIO" widgetVar="dlg2" height="250" >
-                            <h:panelGrid columns="1" cellpadding="0" style="width: 100%;font-weight:bold;">
-                                <h:panelGroup layout="block" style="text-align: center;">
-                                    <h:panelGrid columns="2">
-                                        <p:outputLabel for="Unidade" value="UNIDADE: " />
-                                        <p:selectOneMenu id="Unidade" value="#{ComentarioController.idUnidade}" effect="fold">
-                                            <f:selectItems value="#{AplicacaoController.unidades}"
-                                                           var="unidade"
-                                                           itemLabel="#{unidade.unidade}" 
-                                                           itemValue="#{unidade.idUBS}" />
-                                        </p:selectOneMenu>
-                                        
-                                        <p:outputLabel for="Assunto" value="ASSUNTO: " />
-                                        <p:selectOneMenu id="Assunto" value="#{AssuntoController.idAssunto}" effect="fold">
-                                            <f:selectItems value="#{AssuntoController.ObterAssuntos()}"
-                                                           var="assunto"
-                                                           itemLabel="#{assunto.titulo}"
-                                                           itemDescription="#{assunto.descricao}"
-                                                           itemValue="#{assunto.idassunto}" />
-                                        </p:selectOneMenu>
-
-                                        <h:outputLabel for="#{mensagem.Titulo}" value="TITULO: " />
-                                        <p:inputText  id="#{mensagem.Titulo}" 
-                                                      value="#{ComentarioController.titulo}" 
-                                                      label="#{mensagem.Titulo}" 
-                                                      required="true">
-                                            <f:validateLength minimum="6" />
-                                        </p:inputText>
-         
-                                        <h:outputLabel for="#{mensagem.Descricao}" value="DESRIÇÃO: " />
-                                        <p:inputTextarea id="#{mensagem.Descricao}"
-                                                         value="#{ComentarioController.descricao}"
-                                                         label="#{mensagem.Descricao}"
-                                                         required="true"/>
-                                   
-                                    </h:panelGrid>
-                                    <p:commandButton action="#{LoginController.Deslogar()}" value="CADASTRAR" ajax="false" />
-                                </h:panelGroup>
-                            </h:panelGrid>
-                        </p:dialog>
+                    <!--Botão para chamar formulário de ASSUNTO-->
+                    <h:form rendered="#{not empty usuario}">
+                        <p:commandButton value="ASSUNTO" type="button" onclick="PF('dlgAssunto').show();"  icon="ui-icon-extlink"/>
                     </h:form>
 
+                    <!--Botão para chamar formulário de COMENTÁRIO-->
+                    <h:form rendered="#{not empty usuario}">
+                        <p:commandButton value="COMENTÁRIO" type="button" onclick="PF('dlgComentario').show();"  icon="ui-icon-extlink"/>
+                    </h:form>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
                     <h:form id="form2"> 
                         <p:dataScroller id="lista" value="#{AcolhimentoController.unitySelected.especialidadesCollection}" var="especialidade" chunkSize="10">
                             <f:facet name="header">

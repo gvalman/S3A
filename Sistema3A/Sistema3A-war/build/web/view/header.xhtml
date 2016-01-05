@@ -38,11 +38,14 @@
                     <p:link outcome="/view/index" value="#{mensagem.Cabecalho}"></p:link>
                 </h:panelGroup>
                 <h:panelGroup layout="block" style="text-align: center;">
-                    <h:form>
-                        <h:panelGrid columns="2">
-                            <h:outputLabel value="#{usuario.getNome()}" />
-                        </h:panelGrid>
-                        <p:commandButton action="#{LoginController.Deslogar()}" value="Log Out" ajax="false" />
+                    <h:form>                        
+                        <p:splitButton value="#{usuario.getNome()}">
+                            <p:menuitem value="Configuração" actionListener="#{buttonView.delete}" ajax="false" icon="ui-icon-gear" />
+                            <p:menuitem value="Avaliação" outcome="/view/usuario/formAvaliacao" ajax="false" icon="ui-icon-gear" />
+                            <p:menuitem value="Comentário" actionListener="#{buttonView.delete}" ajax="false" icon="ui-icon-gear" />
+                            <p:separator />
+                            <p:menuitem value="Sair" actionListener="#{LoginController.Deslogar()}" icon="ui-icon-extlink" ajax="false" />
+                        </p:splitButton>
                     </h:form>
                 </h:panelGroup>
             </h:panelGrid>

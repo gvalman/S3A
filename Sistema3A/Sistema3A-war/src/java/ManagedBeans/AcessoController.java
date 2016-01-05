@@ -8,12 +8,13 @@ package ManagedBeans;
 import entidade.Ubs;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ViewScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -45,7 +46,7 @@ public class AcessoController implements Serializable {
         advancedModel = new DefaultMapModel();
         LatLng coord;
 
-        for (Ubs unidade : this.getAplicacaoControl().getUnidades()) {
+        for (Ubs unidade : aplicacaoControl.getUnidades()) {
             coord = new LatLng(unidade.getLatitude(), unidade.getLongitude());
             advancedModel.addOverlay(new Marker(coord, unidade.getUnidade(), unidade));
         }

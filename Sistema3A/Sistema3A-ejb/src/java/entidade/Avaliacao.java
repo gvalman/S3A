@@ -11,11 +11,13 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -29,21 +31,33 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Avaliacao.findAll", query = "SELECT a FROM Avaliacao a"),
     @NamedQuery(name = "Avaliacao.findByUserIduser", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.userIduser = :userIduser"),
     @NamedQuery(name = "Avaliacao.findByComentarioIdcomentario", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.comentarioIdcomentario = :comentarioIdcomentario"),
-    @NamedQuery(name = "Avaliacao.findByNota", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota")})
+    @NamedQuery(name = "Avaliacao.findByNota", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota"),
+    @NamedQuery(name = "Avaliacao.findByTitulo", query = "SELECT a FROM Avaliacao a WHERE a.titulo = :titulo"),
+    @NamedQuery(name = "Avaliacao.findByAceitacao", query = "SELECT a FROM Avaliacao a WHERE a.aceitacao = :aceitacao")})
 public class Avaliacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AvaliacaoPK avaliacaoPK;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "nota")
     private int nota;
-    @JoinColumn(name = "comentario_idcomentario", referencedColumnName = "idcomentario", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Comentario comentario;
+    @Size(max = 100)
+    @Column(name = "titulo")
+    private String titulo;
+    @Lob
+    @Size(max = 2147483647)
+    @Column(name = "descricao")
+    private String descricao;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "aceitacao")
+    private boolean aceitacao;
     @JoinColumn(name = "user_iduser", referencedColumnName = "iduser", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private User user;
+    @JoinColumn(name = "comentario_idcomentario", referencedColumnName = "idcomentario", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Comentario comentario;
 
     public Avaliacao() {
     }
@@ -52,9 +66,10 @@ public class Avaliacao implements Serializable {
         this.avaliacaoPK = avaliacaoPK;
     }
 
-    public Avaliacao(AvaliacaoPK avaliacaoPK, int nota) {
+    public Avaliacao(AvaliacaoPK avaliacaoPK, int nota, boolean aceitacao) {
         this.avaliacaoPK = avaliacaoPK;
         this.nota = nota;
+        this.aceitacao = aceitacao;
     }
 
     public Avaliacao(int userIduser, int comentarioIdcomentario) {
@@ -77,12 +92,28 @@ public class Avaliacao implements Serializable {
         this.nota = nota;
     }
 
-    public Comentario getComentario() {
-        return comentario;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setComentario(Comentario comentario) {
-        this.comentario = comentario;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public boolean getAceitacao() {
+        return aceitacao;
+    }
+
+    public void setAceitacao(boolean aceitacao) {
+        this.aceitacao = aceitacao;
     }
 
     public User getUser() {
@@ -91,6 +122,14 @@ public class Avaliacao implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Comentario getComentario() {
+        return comentario;
+    }
+
+    public void setComentario(Comentario comentario) {
+        this.comentario = comentario;
     }
 
     @Override

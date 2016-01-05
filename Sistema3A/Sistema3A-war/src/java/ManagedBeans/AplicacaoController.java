@@ -13,30 +13,35 @@
  */
 package ManagedBeans;
 
+import entidade.Assunto;
 import entidade.Ubs;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-
 import javax.faces.bean.ApplicationScoped;
+
+
 import javax.faces.bean.ManagedBean;
+import javax.inject.Named;
 import sessionbeans.UbsFacade;
 
 /**
  *
  * @author german
  */
-@ManagedBean(name = "AplicacaoController")
+
 @ApplicationScoped
+@ManagedBean(name = "AplicacaoController")
 public class AplicacaoController implements Serializable {
 
     @EJB
     private UbsFacade ubsFacade;
+    
     private List<Ubs> unidades = null;
 
     @PostConstruct
-    public void init(){
+    public void init() {
         setUnidades(ubsFacade.findAll());
     }
 
@@ -50,5 +55,5 @@ public class AplicacaoController implements Serializable {
 
     public void setUnidades(List<Ubs> unidades) {
         this.unidades = unidades;
-    }  
+    }
 }

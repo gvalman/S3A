@@ -3,13 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/src/java/ManagedBeans/ComentarioController.java</file>
-            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/web/view/acesso/acesso.xhtml</file>
-            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/src/java/ManagedBeans/AcolhimentoController.java</file>
-            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/web/resources/css/geral.css</file>
+            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/src/java/ManagedBeans/AcessoController.java</file>
             <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/src/java/ManagedBeans/AplicacaoController.java</file>
-            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/src/java/ManagedBeans/AssuntoController.java</file>
-            <file>file:/C:/Users/german/Documents/GitHub/S3A/Sistema3A/Sistema3A-war/web/view/acolhimento/acolhimento.xhtml</file>
         </group>
     </open-files>
 </project-private>

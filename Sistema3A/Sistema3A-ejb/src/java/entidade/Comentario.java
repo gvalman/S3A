@@ -40,9 +40,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comentario.findAll", query = "SELECT c FROM Comentario c"),
     @NamedQuery(name = "Comentario.findByIdcomentario", query = "SELECT c FROM Comentario c WHERE c.idcomentario = :idcomentario"),
     @NamedQuery(name = "Comentario.findByTitulo", query = "SELECT c FROM Comentario c WHERE c.titulo = :titulo"),
-    @NamedQuery(name = "Comentario.findByNota", query = "SELECT c FROM Comentario c WHERE c.nota = :nota"),
-    @NamedQuery(name = "Comentario.findByNome", query = "SELECT c FROM Comentario c WHERE c.nome = :nome"),
-    @NamedQuery(name = "Comentario.findByEmail", query = "SELECT c FROM Comentario c WHERE c.email = :email"),
     @NamedQuery(name = "Comentario.findByData", query = "SELECT c FROM Comentario c WHERE c.data = :data"),
     @NamedQuery(name = "Comentario.findByHora", query = "SELECT c FROM Comentario c WHERE c.hora = :hora")})
 public class Comentario implements Serializable {
@@ -64,19 +61,11 @@ public class Comentario implements Serializable {
     @Column(name = "descricao")
     private String descricao;
     @Basic(optional = false)
-    @Column(name = "nota")
-    private int nota;
-    @Size(max = 200)
-    @Column(name = "nome")
-    private String nome;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="E-mail inválido")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 100)
-    @Column(name = "email")
-    private String email;
     @NotNull
     @Column(name = "data")
     @Temporal(TemporalType.DATE)
     private Date data;
+    @Basic(optional = false)
     @NotNull
     @Column(name = "hora")
     @Temporal(TemporalType.TIME)
@@ -100,11 +89,12 @@ public class Comentario implements Serializable {
         this.idcomentario = idcomentario;
     }
 
-    public Comentario(Integer idcomentario, String titulo, String descricao, int nota) {
+    public Comentario(Integer idcomentario, String titulo, String descricao, Date data, Date hora) {
         this.idcomentario = idcomentario;
         this.titulo = titulo;
         this.descricao = descricao;
-        this.nota = nota;
+        this.data = data;
+        this.hora = hora;
     }
 
     public Integer getIdcomentario() {
@@ -129,30 +119,6 @@ public class Comentario implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public int getNota() {
-        return nota;
-    }
-
-    public void setNota(int nota) {
-        this.nota = nota;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Date getData() {

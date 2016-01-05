@@ -10,7 +10,7 @@ import javax.persistence.metamodel.CollectionAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2016-01-02T15:46:12")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2016-01-05T03:19:43")
 @StaticMetamodel(Comentario.class)
 public class Comentario_ { 
 
@@ -20,10 +20,7 @@ public class Comentario_ {
     public static volatile SingularAttribute<Comentario, Assunto> aSSUNTOidassunto;
     public static volatile SingularAttribute<Comentario, Ubs> uBSidUBS;
     public static volatile SingularAttribute<Comentario, String> titulo;
-    public static volatile SingularAttribute<Comentario, String> nome;
     public static volatile SingularAttribute<Comentario, Integer> idcomentario;
-    public static volatile SingularAttribute<Comentario, Integer> nota;
-    public static volatile SingularAttribute<Comentario, String> email;
     public static volatile SingularAttribute<Comentario, String> descricao;
     public static volatile CollectionAttribute<Comentario, Avaliacao> avaliacaoCollection;
 

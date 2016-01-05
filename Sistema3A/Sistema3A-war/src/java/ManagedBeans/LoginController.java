@@ -42,11 +42,12 @@ public class LoginController {
             saida = "Bem Vindo," + UserChecado.getNome();
         }
         //Mostra uma caixa de dialogo
-        //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", saida));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", saida));
     }
 
     public void Deslogar() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", "Sessão Finalizada."));
     }
 
     /**

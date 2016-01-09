@@ -21,20 +21,16 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ApplicationScoped;
 
-
 import javax.faces.bean.ManagedBean;
-import javax.inject.Named;
 import sessionbeans.UbsFacade;
 
 /**
  *
  * @author german
  */
-
 @ApplicationScoped
 @ManagedBean(name = "AplicacaoController")
 public class AplicacaoController implements Serializable {
-
     @EJB
     private UbsFacade ubsFacade;
     
@@ -42,7 +38,11 @@ public class AplicacaoController implements Serializable {
 
     @PostConstruct
     public void init() {
-        setUnidades(ubsFacade.findAll());
+        //ubsFacade = new UbsFacade();
+        //unidades = ubsFacade.FindUBS();
+        unidades = ubsFacade.findAll();
+        //setUnidades(ubsFacade.findAll());
+        System.out.println("AppplicationScoped Iniciado");
     }
 
     public List<Ubs> getUnidades() {

@@ -1,6 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
+ * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package entidade;
@@ -38,9 +37,8 @@ public class Avaliacao implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected AvaliacaoPK avaliacaoPK;
-    @Basic(optional = false)
     @Column(name = "nota")
-    private int nota;
+    private Integer nota;
     @Size(max = 100)
     @Column(name = "titulo")
     private String titulo;
@@ -52,12 +50,12 @@ public class Avaliacao implements Serializable {
     @NotNull
     @Column(name = "aceitacao")
     private boolean aceitacao;
-    @JoinColumn(name = "user_iduser", referencedColumnName = "iduser", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private User user;
     @JoinColumn(name = "comentario_idcomentario", referencedColumnName = "idcomentario", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Comentario comentario;
+    @JoinColumn(name = "user_iduser", referencedColumnName = "iduser", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private User user;
 
     public Avaliacao() {
     }
@@ -66,9 +64,8 @@ public class Avaliacao implements Serializable {
         this.avaliacaoPK = avaliacaoPK;
     }
 
-    public Avaliacao(AvaliacaoPK avaliacaoPK, int nota, boolean aceitacao) {
+    public Avaliacao(AvaliacaoPK avaliacaoPK, boolean aceitacao) {
         this.avaliacaoPK = avaliacaoPK;
-        this.nota = nota;
         this.aceitacao = aceitacao;
     }
 
@@ -84,11 +81,11 @@ public class Avaliacao implements Serializable {
         this.avaliacaoPK = avaliacaoPK;
     }
 
-    public int getNota() {
+    public Integer getNota() {
         return nota;
     }
 
-    public void setNota(int nota) {
+    public void setNota(Integer nota) {
         this.nota = nota;
     }
 
@@ -116,20 +113,20 @@ public class Avaliacao implements Serializable {
         this.aceitacao = aceitacao;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Comentario getComentario() {
         return comentario;
     }
 
     public void setComentario(Comentario comentario) {
         this.comentario = comentario;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

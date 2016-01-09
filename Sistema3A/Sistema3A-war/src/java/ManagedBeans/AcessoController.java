@@ -23,6 +23,7 @@ import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import javax.inject.Inject;
 
 /**
  *
@@ -34,7 +35,7 @@ public class AcessoController implements Serializable {
 
     @ManagedProperty(value = "#{AplicacaoController}")
     private AplicacaoController aplicacaoControl;
-
+    
     private MapModel advancedModel;
     private Marker marker;//Será o marcador selecionado
 
@@ -43,10 +44,11 @@ public class AcessoController implements Serializable {
 
     @PostConstruct
     public void init() {
+
         advancedModel = new DefaultMapModel();
         LatLng coord;
 
-        for (Ubs unidade : aplicacaoControl.getUnidades()) {
+        for (Ubs unidade : getAplicacaoControl().getUnidades()) {
             coord = new LatLng(unidade.getLatitude(), unidade.getLongitude());
             advancedModel.addOverlay(new Marker(coord, unidade.getUnidade(), unidade));
         }

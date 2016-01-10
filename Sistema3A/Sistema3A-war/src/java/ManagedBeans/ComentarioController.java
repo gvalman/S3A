@@ -37,7 +37,7 @@ public class ComentarioController {
     //private AplicacaoController aplControl;
     @EJB
     private ComentarioFacade comentarioFacade;
-
+    
     @EJB
     private UbsFacade ubsFacade;
     @EJB
@@ -46,9 +46,7 @@ public class ComentarioController {
     private UserFacade userFacade;
     @EJB
     private AvaliacaoFacade avaliacaoFacade;
-
     private Comentario comentario;
-
     private String titulo;
     private String descricao;
     private int IdUnidade;
@@ -72,12 +70,22 @@ public class ComentarioController {
         Date data = new Date();
         comentario.setData(data);
         comentario.setHora(data);
+        /*
+        System.out.println("TITULO: " + comentario.getTitulo() + " "
+                + "DESCRIÇÃO: " + comentario.getDescricao() + " "
+                + "DATA: " + comentario.getData() + " "
+                + comentario.getHora() + " "
+                + comentario.getUBSidUBS() + " "
+                + comentario.getASSUNTOidassunto() + " "
+                + comentario.getUserIduser());
+         */
         try {
             comentarioFacade.create(comentario);
             GerarAvaliacaoAceitacao();
             saida = "Cadastro realizado com sucesso!";
         } catch (Exception e) {
             saida = "Cadastro não pode ser realizado.Tente Novamente!";
+            e.printStackTrace();
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sistema 3A Saúde", saida));
     }
@@ -106,6 +114,7 @@ public class ComentarioController {
                 avaliacao.setAvaliacaoPK(pk);
 
                 avaliacao.setAceitacao(true);
+                avaliacao.setNota(0);
                 avaliacaoFacade.create(avaliacao);
 
                 Escolhidos.add(escolhido);

@@ -13,11 +13,8 @@
             <p:growl id="messages" showDetail="true" />
 
             <p:layout rendered="#{not empty usuario}">
-                <p:layoutUnit position="east" size="420">
-                    EAST
-                </p:layoutUnit>
-                <p:layoutUnit position="center">
-                    <p:accordionPanel value="#{AvaliacaoController.findAvaliacoesUser}" var="avaliacao">
+                <p:layoutUnit position="east" size="420" header="#{mensagem.AvaliadosTitulo}">
+                    <p:accordionPanel value="#{AvaliacaoController.AvaliacoesRealiazadasPeloUser()}" var="avaliacao">
                         <p:tab title="#{avaliacao.comentario.UBSidUBS.unidade} - #{avaliacao.comentario.ASSUNTOidassunto.titulo}">
                             <h:panelGrid columns="2" cellpadding="5">
                                 <f:facet name="header">
@@ -32,6 +29,53 @@
                                 <h:outputText value="Color:" style="font-weight: bold" />
                                 <h:outputText value="#{car.color}" />
                             </h:panelGrid>
+                        </p:tab>
+                    </p:accordionPanel>
+                </p:layoutUnit>
+                <p:layoutUnit position="center" header="#{mensagem.FaltaAvaliar}">
+                    <p:accordionPanel value="#{AvaliacaoController.ListarUnidadeAvaliacaoPendente()}" var="unidadePendente">
+                        <p:tab title="#{unidadePendente.unidade}">
+                            <p:accordionPanel value="#{unidadePendente.comentarioCollection}" var="comentarioPendente">
+                                <p:tab title="#{comentarioPendente.getASSUNTOidassunto().titulo}">
+
+                                    <h:panelGrid columns="2" cellpadding="5">     
+                                        <h:outputText value="Titulo:" style="font-weight: bold" />
+                                        <h:outputText value="#{comentarioPendente.titulo}" />
+
+                                        <h:outputText value="Descrição:" style="font-weight: bold" />
+                                        <h:outputText value="#{comentarioPendente.descricao}" />
+
+                                        <h:outputText value="Resgistrado:" style="font-weight: bold" />
+                                        <h:outputText value="#{comentarioPendente.data}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" />
+                                        </h:outputText>
+                                        <h:outputText value="#{comentarioPendente.hora}">
+                                            <f:convertDateTime pattern="HH:mm" />
+                                        </h:outputText>
+                                    </h:panelGrid>
+
+                                    <p:accordionPanel value="#{comentarioPendente.avaliacaoCollection}" var="avaliacaoPendente">
+                                        <p:tab title="Avaliar Comentário">
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:form>
+                                                    <h:panelGrid id="grid" cellpadding="5" columns="2" style="margin-bottom:10px">
+                                                        <p:outputLabel for="titulo" value="Titulo:" />
+                                                        <p:inputText id="titulo" value="#{userView.firstname}"/>
+
+                                                        <p:outputLabel for="descricao" value="Descrição:" />
+                                                        <p:inputText id="descricao" value="#{userView.lastname}"/>
+                                                        
+                                                        <p:outputLabel for="nota" value="Nota:" />
+                                                        <p:rating id="nota" value="#{ratingView.rating1}" rendered="true" stars="10" required="true"/>
+                                                        
+                                                        <p:commandButton action="#" value="AVALIAR" ajax="false" update="@this"/>
+                                                    </h:panelGrid>
+                                                </h:form>
+                                            </h:panelGrid>
+                                        </p:tab>
+                                    </p:accordionPanel>
+                                </p:tab>
+                            </p:accordionPanel>    
                         </p:tab>
                     </p:accordionPanel>
                 </p:layoutUnit>

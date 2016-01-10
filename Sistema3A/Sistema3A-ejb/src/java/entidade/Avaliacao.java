@@ -31,6 +31,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Avaliacao.findByUserIduser", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.userIduser = :userIduser"),
     @NamedQuery(name = "Avaliacao.findByComentarioIdcomentario", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.comentarioIdcomentario = :comentarioIdcomentario"),
     @NamedQuery(name = "Avaliacao.findByNota", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota"),
+    @NamedQuery(name = "Avaliacao.findPendentesByUser", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota AND a.avaliacaoPK.userIduser = :userIduser"),
+    @NamedQuery(name = "Avaliacao.findAvaliadosByUser", query = "SELECT a FROM Avaliacao a WHERE a.nota != :nota AND a.avaliacaoPK.userIduser = :userIduser"),
     @NamedQuery(name = "Avaliacao.findByTitulo", query = "SELECT a FROM Avaliacao a WHERE a.titulo = :titulo"),
     @NamedQuery(name = "Avaliacao.findByAceitacao", query = "SELECT a FROM Avaliacao a WHERE a.aceitacao = :aceitacao")})
 public class Avaliacao implements Serializable {

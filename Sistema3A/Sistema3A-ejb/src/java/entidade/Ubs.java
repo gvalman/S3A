@@ -42,6 +42,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ubs.findByLatitude", query = "SELECT u FROM Ubs u WHERE u.latitude = :latitude"),
     @NamedQuery(name = "Ubs.findByLongitude", query = "SELECT u FROM Ubs u WHERE u.longitude = :longitude")})
 public class Ubs implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -237,5 +238,4 @@ public class Ubs implements Serializable {
     public String toString() {
         return "entidade.Ubs[ idUBS=" + idUBS + " ]";
     }
-    
 }

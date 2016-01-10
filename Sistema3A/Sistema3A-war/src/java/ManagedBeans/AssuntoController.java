@@ -26,7 +26,6 @@ public class AssuntoController {
     private AssuntoFacade assuntoFacade;
     private List<Assunto> Assuntos = null;
     private Assunto NewAssunto;
-
     private int idAssunto;
     private String titulo;
     private String descricao;
@@ -93,5 +92,4 @@ public class AssuntoController {
     public void setIdAssunto(int idAssunto) {
         this.idAssunto = idAssunto;
     }
-
 }

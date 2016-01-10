@@ -27,11 +27,12 @@
                                 </p:inputText>
 
                                 <h:outputLabel for="#{mensagem.Descricao}" value="DESCRIÇÃO: " />
-                                <p:inputTextarea id="#{mensagem.Descricao}"
-                                                 value="#{AssuntoController.descricao}"
+                                <h:inputTextarea id="#{mensagem.Descricao}"
                                                  label="#{mensagem.Descricao}"
-                                                 required="true"/>
-
+                                                 value="#{AssuntoController.descricao}" 
+                                                 required="true">
+                                   <p:ajax event="blur" listener="#{AssuntoController.descricao}"/>
+                                </h:inputTextarea>
                             </h:panelGrid>
                             <p:commandButton action="#{AssuntoController.CadastrarAssunto()}" value="CADASTRAR" ajax="false" />
                         </h:panelGroup>
@@ -41,7 +42,7 @@
 
             <!--Formulário para cadastrar COMENTÁRIO-->
             <h:form>
-                <p:dialog header="COMENTÁRIO" widgetVar="dlgComentario" height="250" >
+                <p:dialog header="COMENTÁRIO" widgetVar="dlgComentario" height="260" >
                     <h:panelGrid columns="1" cellpadding="0" style="width: 100%;font-weight:bold;">
                         <h:panelGroup layout="block" style="text-align: center;">
                             <h:panelGrid columns="2">
@@ -70,11 +71,19 @@
                                     <f:validateLength minimum="6" />
                                 </p:inputText>
 
-                                <h:outputLabel for="#{mensagem.Descricao}" value="DESRIÇÃO: " />
-                                <p:inputTextarea id="#{mensagem.Descricao}"
+                                <h:outputLabel for="#{mensagem.Descricao}" value="DESCRIÇÃO: " />
+                                 <p:inputTextarea id="#{mensagem.Descricao}"
                                                  value="#{ComentarioController.descricao}"
                                                  label="#{mensagem.Descricao}"
-                                                 required="true"/>
+                                                 counter="display"
+                                                 maxlength="100"
+                                                 counterTemplate="{0} CARACTERES RESTANTES"
+                                                 autoResize="false"
+                                                 required="true"
+                                                 placeholder="Descreva sobre o Comentário">
+                                   <p:ajax event="blur" listener="#{ComentarioController.descricao}"/>
+                                 </p:inputTextarea>
+                                <h:outputText id="display" style="font-size: 50%;"/>
                             </h:panelGrid>
                             <p:commandButton action="#{ComentarioController.CadastrarComentario()}" value="CADASTRAR" ajax="false" />
                         </h:panelGroup>

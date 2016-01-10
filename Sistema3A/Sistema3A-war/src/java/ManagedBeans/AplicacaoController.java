@@ -31,16 +31,16 @@ import sessionbeans.UbsFacade;
 @ApplicationScoped
 @ManagedBean(name = "AplicacaoController")
 public class AplicacaoController implements Serializable {
+
     @EJB
     private UbsFacade ubsFacade;
-    
     private List<Ubs> unidades = null;
 
     @PostConstruct
     public void init() {
         //ubsFacade = new UbsFacade();
         //unidades = ubsFacade.FindUBS();
-        unidades = ubsFacade.findAll();
+        unidades = getUbsFacade().findAll();
         //setUnidades(ubsFacade.findAll());
         System.out.println("AppplicationScoped Iniciado");
     }
@@ -55,5 +55,16 @@ public class AplicacaoController implements Serializable {
 
     public void setUnidades(List<Ubs> unidades) {
         this.unidades = unidades;
+    }
+
+    /**
+     * @return the ubsFacade
+     */
+    private UbsFacade getUbsFacade() {
+        return ubsFacade;
+    }
+    
+    public List<Ubs> ListarAllUnidade(){
+         return ubsFacade.findAll();
     }
 }

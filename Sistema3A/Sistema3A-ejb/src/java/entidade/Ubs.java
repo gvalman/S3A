@@ -13,6 +13,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
@@ -42,7 +44,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Ubs.findByLatitude", query = "SELECT u FROM Ubs u WHERE u.latitude = :latitude"),
     @NamedQuery(name = "Ubs.findByLongitude", query = "SELECT u FROM Ubs u WHERE u.longitude = :longitude")})
 public class Ubs implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,7 +92,10 @@ public class Ubs implements Serializable {
     @NotNull
     @Column(name = "longitude")
     private double longitude;
-    @ManyToMany(mappedBy = "ubsCollection")
+    @JoinTable(name = "ubs_has_especialidades", joinColumns = {
+        @JoinColumn(name = "UBS_idUBS", referencedColumnName = "idUBS")}, inverseJoinColumns = {
+        @JoinColumn(name = "ESPECIALIDADES_idESPECIALIDADES", referencedColumnName = "idESPECIALIDADES")})
+    @ManyToMany
     private Collection<Especialidades> especialidadesCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "uBSidUBS")
     private Collection<Comentario> comentarioCollection;
@@ -238,4 +242,5 @@ public class Ubs implements Serializable {
     public String toString() {
         return "entidade.Ubs[ idUBS=" + idUBS + " ]";
     }
+    
 }

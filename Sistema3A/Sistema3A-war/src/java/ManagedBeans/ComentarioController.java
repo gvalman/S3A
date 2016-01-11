@@ -6,7 +6,6 @@
 package ManagedBeans;
 
 import entidade.Avaliacao;
-import entidade.AvaliacaoPK;
 import entidade.Comentario;
 import entidade.User;
 import java.util.ArrayList;
@@ -98,7 +97,6 @@ public class ComentarioController {
         boolean Adicionar = true;
         Random gerador = new Random();
         Avaliacao avaliacao = new Avaliacao();
-        AvaliacaoPK pk = new AvaliacaoPK();
 
         while (Escolhidos.size() < 3) {
             escolhido = gerador.nextInt(Users.size());
@@ -109,9 +107,8 @@ public class ComentarioController {
                 }
             }
             if (Adicionar) {
-                pk.setUserIduser(Users.get(escolhido).getIduser());
-                pk.setComentarioIdcomentario(comentarioFacade.findAll().get(comentarioFacade.findAll().size() - 1).getIdcomentario());
-                avaliacao.setAvaliacaoPK(pk);
+                avaliacao.setUserIduser(Users.get(escolhido));
+                avaliacao.setComentarioIdcomentario(comentarioFacade.findAll().get(comentarioFacade.findAll().size() - 1));
 
                 avaliacao.setAceitacao(true);
                 avaliacao.setNota(0);

@@ -7,8 +7,10 @@ package entidade;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
@@ -28,17 +30,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Avaliacao.findAll", query = "SELECT a FROM Avaliacao a"),
-    @NamedQuery(name = "Avaliacao.findByUserIduser", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.userIduser = :userIduser"),
-    @NamedQuery(name = "Avaliacao.findByComentarioIdcomentario", query = "SELECT a FROM Avaliacao a WHERE a.avaliacaoPK.comentarioIdcomentario = :comentarioIdcomentario"),
+    @NamedQuery(name = "Avaliacao.findByIdAvaliacao", query = "SELECT a FROM Avaliacao a WHERE a.idAvaliacao = :idAvaliacao"),
     @NamedQuery(name = "Avaliacao.findByNota", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota"),
-    @NamedQuery(name = "Avaliacao.findPendentesByUser", query = "SELECT a FROM Avaliacao a WHERE a.nota = :nota AND a.avaliacaoPK.userIduser = :userIduser"),
-    @NamedQuery(name = "Avaliacao.findAvaliadosByUser", query = "SELECT a FROM Avaliacao a WHERE a.nota != :nota AND a.avaliacaoPK.userIduser = :userIduser"),
     @NamedQuery(name = "Avaliacao.findByTitulo", query = "SELECT a FROM Avaliacao a WHERE a.titulo = :titulo"),
-    @NamedQuery(name = "Avaliacao.findByAceitacao", query = "SELECT a FROM Avaliacao a WHERE a.aceitacao = :aceitacao")})
+    @NamedQuery(name = "Avaliacao.findByAceitacao", query = "SELECT a FROM Avaliacao a WHERE a.aceitacao = :aceitacao"),
+    @NamedQuery(name = "Avaliacao.findByComentario", query = "SELECT a FROM Avaliacao a WHERE a.comentarioIdcomentario = :idComentario")})
 public class Avaliacao implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected AvaliacaoPK avaliacaoPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idAvaliacao")
+    private Integer idAvaliacao;
     @Column(name = "nota")
     private Integer nota;
     @Size(max = 100)
@@ -52,35 +56,31 @@ public class Avaliacao implements Serializable {
     @NotNull
     @Column(name = "aceitacao")
     private boolean aceitacao;
-    @JoinColumn(name = "comentario_idcomentario", referencedColumnName = "idcomentario", insertable = false, updatable = false)
+    @JoinColumn(name = "user_iduser", referencedColumnName = "iduser")
     @ManyToOne(optional = false)
-    private Comentario comentario;
-    @JoinColumn(name = "user_iduser", referencedColumnName = "iduser", insertable = false, updatable = false)
+    private User userIduser;
+    @JoinColumn(name = "comentario_idcomentario", referencedColumnName = "idcomentario")
     @ManyToOne(optional = false)
-    private User user;
+    private Comentario comentarioIdcomentario;
 
     public Avaliacao() {
     }
 
-    public Avaliacao(AvaliacaoPK avaliacaoPK) {
-        this.avaliacaoPK = avaliacaoPK;
+    public Avaliacao(Integer idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
     }
 
-    public Avaliacao(AvaliacaoPK avaliacaoPK, boolean aceitacao) {
-        this.avaliacaoPK = avaliacaoPK;
+    public Avaliacao(Integer idAvaliacao, boolean aceitacao) {
+        this.idAvaliacao = idAvaliacao;
         this.aceitacao = aceitacao;
     }
 
-    public Avaliacao(int userIduser, int comentarioIdcomentario) {
-        this.avaliacaoPK = new AvaliacaoPK(userIduser, comentarioIdcomentario);
+    public Integer getIdAvaliacao() {
+        return idAvaliacao;
     }
 
-    public AvaliacaoPK getAvaliacaoPK() {
-        return avaliacaoPK;
-    }
-
-    public void setAvaliacaoPK(AvaliacaoPK avaliacaoPK) {
-        this.avaliacaoPK = avaliacaoPK;
+    public void setIdAvaliacao(Integer idAvaliacao) {
+        this.idAvaliacao = idAvaliacao;
     }
 
     public Integer getNota() {
@@ -115,26 +115,26 @@ public class Avaliacao implements Serializable {
         this.aceitacao = aceitacao;
     }
 
-    public Comentario getComentario() {
-        return comentario;
+    public User getUserIduser() {
+        return userIduser;
     }
 
-    public void setComentario(Comentario comentario) {
-        this.comentario = comentario;
+    public void setUserIduser(User userIduser) {
+        this.userIduser = userIduser;
     }
 
-    public User getUser() {
-        return user;
+    public Comentario getComentarioIdcomentario() {
+        return comentarioIdcomentario;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setComentarioIdcomentario(Comentario comentarioIdcomentario) {
+        this.comentarioIdcomentario = comentarioIdcomentario;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (avaliacaoPK != null ? avaliacaoPK.hashCode() : 0);
+        hash += (idAvaliacao != null ? idAvaliacao.hashCode() : 0);
         return hash;
     }
 
@@ -145,7 +145,7 @@ public class Avaliacao implements Serializable {
             return false;
         }
         Avaliacao other = (Avaliacao) object;
-        if ((this.avaliacaoPK == null && other.avaliacaoPK != null) || (this.avaliacaoPK != null && !this.avaliacaoPK.equals(other.avaliacaoPK))) {
+        if ((this.idAvaliacao == null && other.idAvaliacao != null) || (this.idAvaliacao != null && !this.idAvaliacao.equals(other.idAvaliacao))) {
             return false;
         }
         return true;
@@ -153,7 +153,6 @@ public class Avaliacao implements Serializable {
 
     @Override
     public String toString() {
-        return "entidade.Avaliacao[ avaliacaoPK=" + avaliacaoPK + " ]";
+        return "entidade.Avaliacao[ idAvaliacao=" + idAvaliacao + " ]";
     }
-    
 }

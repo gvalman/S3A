@@ -24,6 +24,7 @@
                                               label="#{mensagem.Titulo}" 
                                               required="true">
                                     <f:validateLength minimum="6" />
+                                    <p:ajax event="blur" listener="#{AssuntoController.titulo}"/>
                                 </p:inputText>
 
                                 <h:outputLabel for="#{mensagem.Descricao}" value="DESCRIÇÃO: " />
@@ -31,7 +32,7 @@
                                                  label="#{mensagem.Descricao}"
                                                  value="#{AssuntoController.descricao}" 
                                                  required="true">
-                                   <p:ajax event="blur" listener="#{AssuntoController.descricao}"/>
+                                    <p:ajax event="blur" listener="#{AssuntoController.descricao}"/>
                                 </h:inputTextarea>
                             </h:panelGrid>
                             <p:commandButton action="#{AssuntoController.CadastrarAssunto()}" value="CADASTRAR" ajax="false" />
@@ -72,7 +73,7 @@
                                 </p:inputText>
 
                                 <h:outputLabel for="#{mensagem.Descricao}" value="DESCRIÇÃO: " />
-                                 <p:inputTextarea id="#{mensagem.Descricao}"
+                                <p:inputTextarea id="#{mensagem.Descricao}"
                                                  value="#{ComentarioController.descricao}"
                                                  label="#{mensagem.Descricao}"
                                                  counter="display"
@@ -81,8 +82,8 @@
                                                  autoResize="false"
                                                  required="true"
                                                  placeholder="Descreva sobre o Comentário">
-                                   <p:ajax event="blur" listener="#{ComentarioController.descricao}"/>
-                                 </p:inputTextarea>
+                                    <p:ajax event="blur" listener="#{ComentarioController.descricao}"/>
+                                </p:inputTextarea>
                                 <h:outputText id="display" style="font-size: 50%;"/>
                             </h:panelGrid>
                             <p:commandButton action="#{ComentarioController.CadastrarComentario()}" value="CADASTRAR" ajax="false" />
@@ -100,11 +101,8 @@
                     <h:form id="form1">
                         <p:carousel  value="#{AplicacaoController.unidades}" headerText="UNIDADES" var="unidade" itemStyle="height:200px;width:400px;text-align:center" numVisible="1" easing="easeOutBounce" style="width:400px;" circular="true">
                             <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
-                                <f:facet name="header">
-                                    <p:graphicImage name="demo/images/car/#{car.brand}.gif"/> 
-                                </f:facet>
 
-                                <h:outputText value="Color:" />
+                                <h:outputText value="Unidade:" />
                                 <h:outputText value="#{unidade.unidade}" style="color:blue;"/>
 
                                 <h:outputText value="Endereço:" />
@@ -142,21 +140,51 @@
                 </p:layoutUnit>
 
                 <p:layoutUnit position="center">
-                    <h:form id="form2"> 
-                        <p:dataScroller id="lista" value="#{AcolhimentoController.unitySelected.especialidadesCollection}" var="especialidade" chunkSize="10">
-                            <f:facet name="header">
-                                LOJAS ONDE ENCONTRARÁ O CARRO SELECIONADO:
-                            </f:facet>
+                    <h:form id="form2">
+                        <p:accordionPanel id="lista" value="#{AcolhimentoController.ComentariosUnidadeAceitos()}" var="ComentarioAceito">
+                            <p:tab title="#{ComentarioAceito.titulo}">
+                                <h:panelGrid columns="2" cellpadding="5">     
+                                    <h:outputText value="Descrição:" style="font-weight: bold" />
+                                    <h:outputText value="#{ComentarioAceito.descricao}" />
 
-                            <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                <p:outputPanel>
-                                    <h:panelGrid columns="2" cellpadding="5">
-                                        <h:outputText value="Especialidade:" />
-                                        <h:outputText value="#{especialidade.nome}" style="font-weight: bold"/>
-                                    </h:panelGrid>
-                                </p:outputPanel>
-                            </h:panelGrid>
-                        </p:dataScroller>
+                                    <h:outputText value="Assunto:" style="font-weight: bold" />
+                                    <h:outputText value="#{ComentarioAceito.ASSUNTOidassunto.titulo}" />
+
+                                    <h:outputText value="Resgistrado:" style="font-weight: bold" />
+                                    <h:outputText value="#{ComentarioAceito.data}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                                    </h:outputText>
+                                    <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                                    <h:outputText value="#{ComentarioAceito.hora}">
+                                        <f:convertDateTime pattern="HH:mm" />
+                                    </h:outputText>
+
+                                    <h:outputText value="Nota:" />
+                                    <p:rating value="#{AcolhimentoController.mediaSelecionado}" readonly="true" stars="10" />
+
+                                    <p:dataScroller id="subLista" value="#{AcolhimentoController.FindAvaliacoesByComentario(ComentarioAceito)}" var="avaliacao" chunkSize="10">
+                                        <f:facet name="header">
+                                            #{avaliacao.titulo}
+                                        </f:facet>
+
+                                        <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
+                                            <p:outputPanel>
+                                                <h:panelGrid columns="2" cellpadding="5">
+                                                    <h:outputText value="Descrição:" />
+                                                    <h:outputText value="#{avaliacao.descricao}" style="font-weight: bold"/>
+
+                                                    <h:outputText value="Nota:" />
+                                                    <p:rating value="#{avaliacao.nota}" readonly="true" stars="10" />
+
+                                                    <h:outputText value="Usuário:" />
+                                                    <h:outputText value="#{avaliacao.userIduser.nome}" style="font-weight: bold"/>
+                                                </h:panelGrid>
+                                            </p:outputPanel>
+                                        </h:panelGrid>
+                                    </p:dataScroller>
+                                </h:panelGrid>
+                            </p:tab>
+                        </p:accordionPanel>
                     </h:form>
                 </p:layoutUnit>
             </p:layout>

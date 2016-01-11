@@ -5,7 +5,6 @@
 package sessionbeans;
 
 import entidade.Ubs;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +15,6 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class UbsFacade extends AbstractFacade<Ubs> {
-
     @PersistenceContext(unitName = "Sistema3A-ejbPU")
     private EntityManager em;
 
@@ -28,4 +26,5 @@ public class UbsFacade extends AbstractFacade<Ubs> {
     public UbsFacade() {
         super(Ubs.class);
     }
+    
 }

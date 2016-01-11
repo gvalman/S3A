@@ -5,6 +5,8 @@
 package sessionbeans;
 
 import entidade.Comentario;
+import entidade.Ubs;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ComentarioFacade extends AbstractFacade<Comentario> {
+
     @PersistenceContext(unitName = "Sistema3A-ejbPU")
     private EntityManager em;
 
@@ -26,5 +29,12 @@ public class ComentarioFacade extends AbstractFacade<Comentario> {
     public ComentarioFacade() {
         super(Comentario.class);
     }
-    
+
+    public List<Comentario> FindComentarioByUbs(Ubs idUbs) {
+        List<Comentario> resultado = null;
+        resultado = em.createNamedQuery("Comentario.findByUnidade")
+                .setParameter("idUBS", idUbs)
+                .getResultList();
+        return resultado;
+    }
 }

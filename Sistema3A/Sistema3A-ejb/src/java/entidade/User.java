@@ -70,7 +70,7 @@ public class User implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "email")
     private String email;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userIduser")
     private Collection<Avaliacao> avaliacaoCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userIduser")
     private Collection<Comentario> comentarioCollection;

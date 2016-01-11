@@ -40,8 +40,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comentario.findByIdcomentario", query = "SELECT c FROM Comentario c WHERE c.idcomentario = :idcomentario"),
     @NamedQuery(name = "Comentario.findByTitulo", query = "SELECT c FROM Comentario c WHERE c.titulo = :titulo"),
     @NamedQuery(name = "Comentario.findByData", query = "SELECT c FROM Comentario c WHERE c.data = :data"),
-    @NamedQuery(name = "Comentario.findByHora", query = "SELECT c FROM Comentario c WHERE c.hora = :hora")})
+    @NamedQuery(name = "Comentario.findByHora", query = "SELECT c FROM Comentario c WHERE c.hora = :hora"),
+    @NamedQuery(name = "Comentario.findByUnidade", query = "SELECT c FROM Comentario c WHERE c.userIduser = :idUBS")})
 public class Comentario implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,7 +71,7 @@ public class Comentario implements Serializable {
     @Column(name = "hora")
     @Temporal(TemporalType.TIME)
     private Date hora;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comentario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "comentarioIdcomentario")
     private Collection<Avaliacao> avaliacaoCollection;
     @JoinColumn(name = "ASSUNTO_idassunto", referencedColumnName = "idassunto")
     @ManyToOne(optional = false)
@@ -193,5 +195,4 @@ public class Comentario implements Serializable {
     public String toString() {
         return "entidade.Comentario[ idcomentario=" + idcomentario + " ]";
     }
-    
 }

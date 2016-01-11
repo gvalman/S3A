@@ -6,11 +6,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <ui:composition template="/view/template.xhtml">
+        
+        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+        
         <ui:define name="title">
             <h:outputText value="#{mensagem.Cabecalho}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form id="form">
+            <h:form id="form" enctype="multipart/form-data" acceptcharset="utf-8">
                 <p:growl id="messagemFormUser" showDetail="true" />
                 <p:panel id="panel" header="CADASTRAR USUÁRIO" style="margin-bottom:10px;">
                     <h:panelGrid id="conteudo" columns="1" cellpadding="0" style="width: 100%;height: 100%;">
@@ -61,7 +64,6 @@
                                          value="#{UserController.cep}">
                                 <f:validateLength minimum="8" maximum="8"/> 
                                 <p:ajax event="keyup" update="messagemFormUser" listener="#{UserController.checkCEP}" />
-
                             </p:inputText>
                             <p:watermark for="#{mensagem.Cep}" value="Digite um CEP" />
 

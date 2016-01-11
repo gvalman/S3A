@@ -5,7 +5,8 @@
 package sessionbeans;
 
 import entidade.Avaliacao;
-import entidade.User;
+import entidade.Comentario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,25 +31,16 @@ public class AvaliacaoFacade extends AbstractFacade<Avaliacao> {
         super(Avaliacao.class);
     }
 
-    public List<Avaliacao> AvaliacoesPendentesByUser(int idUser) {
-        List<Avaliacao> resultado = null;
-
-        resultado = em.createNamedQuery("Avaliacao.findPendentesByUser")
-                .setParameter("nota", 0)
-                .setParameter("userIduser", idUser)
+    public List<Avaliacao> FindAvaliacaoByComentario(Comentario idComentario) {
+        List<Avaliacao> resultado = null, saida = new ArrayList<>();
+        resultado = em.createNamedQuery("Avaliacao.findByComentario")
+                .setParameter("idComentario", idComentario)
                 .getResultList();
-
-        return resultado;
-    }
-    
-    public List<Avaliacao> AvaliacoesAvaliadasByUser(int idUser) {
-        List<Avaliacao> resultado = null;
-
-        resultado = em.createNamedQuery("Avaliacao.findAvaliadosByUser")
-                .setParameter("nota", 0)
-                .setParameter("userIduser", idUser)
-                .getResultList();
-
-        return resultado;
+        for (Avaliacao avaliacao : resultado) {
+            if (!avaliacao.getAceitacao()) {
+                saida.add(avaliacao);
+            }
+        }
+        return saida;
     }
 }

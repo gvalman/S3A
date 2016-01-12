@@ -41,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Comentario.findByTitulo", query = "SELECT c FROM Comentario c WHERE c.titulo = :titulo"),
     @NamedQuery(name = "Comentario.findByData", query = "SELECT c FROM Comentario c WHERE c.data = :data"),
     @NamedQuery(name = "Comentario.findByHora", query = "SELECT c FROM Comentario c WHERE c.hora = :hora"),
-    @NamedQuery(name = "Comentario.findByUnidade", query = "SELECT c FROM Comentario c WHERE c.userIduser = :idUBS")})
+    @NamedQuery(name = "Comentario.findByUnidade", query = "SELECT c FROM Comentario c WHERE c.uBSidUBS = :idUBS")})
 public class Comentario implements Serializable {
 
     private static final long serialVersionUID = 1L;

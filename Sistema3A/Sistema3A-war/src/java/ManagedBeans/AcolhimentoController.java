@@ -34,8 +34,10 @@ public class AcolhimentoController implements Serializable {
     @EJB
     private AvaliacaoFacade avaliacaoFacade;
     private Ubs UnitySelected;
-    private int mediaSelecionado;
-
+    
+    private Comentario comentarioSelecionado;
+    private String tituloAvaliacao,descricaoAvaliacao;
+    private int notaAvaliacao;
     /**
      * @return the UnitySelected
      */
@@ -51,25 +53,31 @@ public class AcolhimentoController implements Serializable {
     }
 
     public List<Comentario> ComentariosUnidadeAceitos() {
-        List<Comentario> resultado = null, Temp;
+
+        List<Comentario> resultado = new ArrayList<Comentario>(), Temp;
         List<Avaliacao> avaliacoesAvaliadas;
-        int SomaNota = 0;
+        int SomaNota = 0, media;
 
         for (Comentario comentario : comentarioFacade.FindComentarioByUbs(UnitySelected)) {
+            //System.out.println(comentario);
             avaliacoesAvaliadas = new ArrayList<Avaliacao>();
             SomaNota = 0;
             for (Avaliacao avaliacao : comentario.getAvaliacaoCollection()) {
                 if (avaliacao.getAceitacao() && avaliacao.getNota() > 0) {
+                    //System.out.println(avaliacao + " Nota:" + avaliacao.getNota());
                     avaliacoesAvaliadas.add(avaliacao);
                     SomaNota += avaliacao.getNota();
                 }
             }
-            if (avaliacoesAvaliadas.size() == 3 && (SomaNota / avaliacoesAvaliadas.size()) >= 7) {
-                mediaSelecionado = SomaNota / avaliacoesAvaliadas.size();
+
+            media = SomaNota / avaliacoesAvaliadas.size();
+            //System.out.println("Soma das Notas: " + SomaNota + " Média:" + mediaSelecionado);
+            if (avaliacoesAvaliadas.size() == 3 && media >= 7) {
                 comentario.setAvaliacaoCollection(avaliacoesAvaliadas);
                 resultado.add(comentario);
             }
         }
+        //System.out.println(resultado);
         return resultado;
     }
 
@@ -79,17 +87,70 @@ public class AcolhimentoController implements Serializable {
         return resultado;
     }
 
-    /**
-     * @return the mediaSelecionado
-     */
-    public int getMediaSelecionado() {
-        return mediaSelecionado;
+    public int CalcularMediaAvaliacoes(List<Avaliacao> Avaliacoes) {
+        int media = 0;
+
+        for (Avaliacao avaliacao : Avaliacoes) {
+            media += avaliacao.getNota();
+        }
+
+        media = media / Avaliacoes.size();
+        return media;
     }
 
     /**
-     * @param mediaSelecionado the mediaSelecionado to set
+     * @return the comentarioSelecionado
      */
-    public void setMediaSelecionado(int mediaSelecionado) {
-        this.mediaSelecionado = mediaSelecionado;
+    public Comentario getComentarioSelecionado() {
+        return comentarioSelecionado;
+    }
+
+    /**
+     * @param comentarioSelecionado the comentarioSelecionado to set
+     */
+    public void setComentarioSelecionado(Comentario comentarioSelecionado) {
+        this.comentarioSelecionado = comentarioSelecionado;
+    }
+
+    /**
+     * @return the tituloAvaliacao
+     */
+    public String getTituloAvaliacao() {
+        return tituloAvaliacao;
+    }
+
+    /**
+     * @param tituloAvaliacao the tituloAvaliacao to set
+     */
+    public void setTituloAvaliacao(String tituloAvaliacao) {
+        this.tituloAvaliacao = tituloAvaliacao;
+    }
+
+    /**
+     * @return the descricaoAvaliacao
+     */
+    public String getDescricaoAvaliacao() {
+        return descricaoAvaliacao;
+    }
+
+    /**
+     * @param descricaoAvaliacao the descricaoAvaliacao to set
+     */
+    public void setDescricaoAvaliacao(String descricaoAvaliacao) {
+        this.descricaoAvaliacao = descricaoAvaliacao;
+    }
+
+    /**
+     * @return the notaAvaliacao
+     */
+    public int getNotaAvaliacao() {
+        return notaAvaliacao;
+    }
+
+    /**
+     * @param notaAvaliacao the notaAvaliacao to set
+     */
+    public void setNotaAvaliacao(int notaAvaliacao) {
+        this.notaAvaliacao = notaAvaliacao;
     }
 }

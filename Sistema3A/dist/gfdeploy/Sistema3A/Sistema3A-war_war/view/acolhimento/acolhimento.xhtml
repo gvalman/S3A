@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition template="/view/template.xhtml">
         <ui:define name="body">
@@ -91,6 +92,35 @@
                     </h:panelGrid>
                 </p:dialog>
             </h:form>
+            
+            <!--Formulário para cadastrar AVALIAÇÃO para COMENTÁRIO-->
+            <h:form>
+                <p:dialog header="Avaliar Comentário" widgetVar="dlgAvaliacaoComentario" height="180" >
+                    <h:panelGrid columns="1" cellpadding="0" style="width: 100%;font-weight:bold;">
+                        <h:panelGroup layout="block" style="text-align: center;">
+                            <h:panelGrid columns="2">
+                                <h:outputLabel for="#{mensagem.Titulo}" value="TITULO: " />
+                                <p:inputText  id="#{mensagem.Titulo}" 
+                                              value="#{AcolhimentoController.tituloAvaliacao}" 
+                                              label="#{mensagem.Titulo}" 
+                                              required="true">
+                                    <f:validateLength minimum="6" />
+                                    <p:ajax event="blur" listener="#{AcolhimentoController.tituloAvaliacao}"/>
+                                </p:inputText>
+
+                                <h:outputLabel for="#{mensagem.Descricao}" value="DESCRIÇÃO: " />
+                                <h:inputTextarea id="#{mensagem.Descricao}"
+                                                 label="#{mensagem.Descricao}"
+                                                 value="#{AcolhimentoController.descricaoAvaliacao}" 
+                                                 required="true">
+                                    <p:ajax event="blur" listener="#{AcolhimentoController.descricaoAvaliacao}"/>
+                                </h:inputTextarea>
+                            </h:panelGrid>
+                            <p:commandButton action="#{AssuntoController.CadastrarAssunto()}" value="CADASTRAR" ajax="false" />
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:dialog>
+            </h:form>
 
             <p:layout>
                 <!--Usado para mostrar caixa de mensagem-->
@@ -143,33 +173,46 @@
                     <h:form id="form2">
                         <p:accordionPanel id="lista" value="#{AcolhimentoController.ComentariosUnidadeAceitos()}" var="ComentarioAceito">
                             <p:tab title="#{ComentarioAceito.titulo}">
-                                <h:panelGrid columns="2" cellpadding="5">     
-                                    <h:outputText value="Descrição:" style="font-weight: bold" />
-                                    <h:outputText value="#{ComentarioAceito.descricao}" />
+                                <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
 
-                                    <h:outputText value="Assunto:" style="font-weight: bold" />
+                                    <h:form rendered="#{not empty usuario}">
+                                        <p:commandButton value="AVALIAR COMENTÁRIO" type="button" onclick="PF('dlgAvaliacaoComentario').show();"  icon="ui-icon-extlink">
+                                            <f:setPropertyActionListener value="#{ComentarioAceito}" target="#{AcolhimentoController.comentarioSelecionado}" />
+                                        </p:commandButton>
+                                    </h:form>
+                                    <h:outputText value="&lt;br/&gt;" escape="false" /> 
+                                    
+                                    <h:outputText value="Assunto:" style="font-weight: bold" />    
                                     <h:outputText value="#{ComentarioAceito.ASSUNTOidassunto.titulo}" />
 
                                     <h:outputText value="Resgistrado:" style="font-weight: bold" />
                                     <h:outputText value="#{ComentarioAceito.data}">
                                         <f:convertDateTime pattern="dd/MM/yyyy" />
                                     </h:outputText>
+
                                     <h:outputText value="&lt;br/&gt;" escape="false" /> 
                                     <h:outputText value="#{ComentarioAceito.hora}">
                                         <f:convertDateTime pattern="HH:mm" />
                                     </h:outputText>
 
-                                    <h:outputText value="Nota:" />
-                                    <p:rating value="#{AcolhimentoController.mediaSelecionado}" readonly="true" stars="10" />
+                                    <h:outputText value="Aceitação(Média):" />
+                                    <p:rating value="#{AcolhimentoController.CalcularMediaAvaliacoes(ComentarioAceito.avaliacaoCollection)}" readonly="true" stars="10" />
 
-                                    <p:dataScroller id="subLista" value="#{AcolhimentoController.FindAvaliacoesByComentario(ComentarioAceito)}" var="avaliacao" chunkSize="10">
+                                    <p:dataScroller id="subLista" style="width: 100%" value="#{AcolhimentoController.FindAvaliacoesByComentario(ComentarioAceito)}" var="avaliacao" chunkSize="1">
                                         <f:facet name="header">
-                                            #{avaliacao.titulo}
+                                            Avaliações Realizadas Pelos Usuários
+                                        </f:facet>
+
+                                        <f:facet name="loader">
+                                            <p:commandButton type="button" value="More" icon="ui-icon-circle-triangle-s"/>
                                         </f:facet>
 
                                         <h:panelGrid columns="2" style="width:100%" columnClasses="logo,detail">
-                                            <p:outputPanel>
+                                            <p:outputPanel style="width:100%">
                                                 <h:panelGrid columns="2" cellpadding="5">
+                                                    <h:outputText value="Titulo:" />
+                                                    <h:outputText value="#{avaliacao.titulo}" style="font-weight: bold"/>
+
                                                     <h:outputText value="Descrição:" />
                                                     <h:outputText value="#{avaliacao.descricao}" style="font-weight: bold"/>
 
